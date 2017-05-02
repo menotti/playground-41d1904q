@@ -2,5 +2,5 @@
 
 AVX prerequisites
 
-@[Search Combo]({"stubs": ["prereq/detect.sh"], "command": "chmod +x ./prereq/detect.sh;./prereq/detect.sh;echo 'CG> success true'"})
+@[Search Combo]({"stubs": ["prereq/detect.sh"], "command": "chmod +x /project/target/detect.sh;/bin/bash /project/target/detect.sh"})
 
