@@ -5,7 +5,7 @@ plan:
   - title: Prerequisites
     statement: markdowns/prereq.md
 projects:
-    voronoi:
+    avx:
         root: /projects/avx
         runner:
             name: codingame/cmake-gcc-runner

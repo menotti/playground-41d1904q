@@ -2,4 +2,4 @@
 
 AVX prerequisites
 
-@[Search Combo]({"stubs": ["combo/combo.cpp"], "command": "./run.sh ./prereq/detect.sh"})
+@[Search Combo]({"stubs": ["prereq/detect.sh"], "command": "./run.sh ./prereq/detect.sh"})
