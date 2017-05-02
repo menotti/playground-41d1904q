@@ -7,7 +7,7 @@ plan:
 projects:
     avx:
         root: /projects/avx
-        buildCommand: "cd /project/target && chmod +x prebuild.sh && ./prebuild.sh"
+        buildCommand: "chmod +x /project/target/run.sh"
         runner:
             name: codingame/cmake-gcc-runner
             version: 1.1.0-gcc-6.3
