@@ -2,4 +2,4 @@
 
 AVX prerequisites
 
-@[Search Combo]({"stubs": ["prereq/detect.sh"], "command": "./Dummy"})
+@[Search Combo]({"stubs": ["prereq/detect.sh"], "command": "./run.sh ./prereq/detect.sh"})
