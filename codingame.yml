@@ -1,6 +1,12 @@
-title : Content name
+title : "SSE & AVX Vectorization"
 plan:
-  - title: Part 1
-    statement: markdowns/part1.md
-  - title: Part 2
-    statement: markdowns/part2.md
+  - title: "What is SSE and AVX?"
+    statement: markdowns/intro.md
+  - title: Prerequisites
+    statement: markdowns/prereq.md
+projects:
+    voronoi:
+        root: /projects/avx
+        runner:
+            name: codingame/cmake-gcc-runner
+            version: 1.1.0-gcc-6.3
