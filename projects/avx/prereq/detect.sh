@@ -1,4 +1,4 @@
-#!bin/sh
+#!/bin/bash
 #CPU flag detection
 cat /proc/cpuinfo  
 #Compiler capabilities. -march=native is required!
