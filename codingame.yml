@@ -4,10 +4,11 @@ plan:
     statement: markdowns/intro.md
   - title: Prerequisites
     statement: markdowns/prereq.md
+  - title: "First AVX Code: SQRT calculation"
+    statement: markdowns/sqrt.md	
 projects:
     avx:
         root: /projects/avx
-        #buildCommand: "ls -la && chmod +x prebuild.sh && ls -la && pwd && /bin/bash /project/target/prebuild.sh"
         buildCommand: "chmod +x prebuild.sh && ./prebuild.sh"
         runner:
             name: codingame/cmake-gcc-runner
