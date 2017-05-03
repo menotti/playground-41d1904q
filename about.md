@@ -8,7 +8,7 @@ It's recommended an advanced C++ knowledge: code optimization, compiler flags & 
 In this Course C++ will be used. Please note that SSE/AVX extensions are available on other languages (FreePascal, C#, Rust, etc.), but they are out of scope.
 
 ## Difficulty Level: 
-Expert. This is not an user-friendly Course. Manual vector extensions adds many layers of complexity that should be avoided if optimization of lineal code is enough.
+Expert. This is not an user-friendly Course. Manual vector extensions add many layers of complexity that should be avoided if optimization of linear code is enough.
 
 ## Estimated Time:
 120 minutes.

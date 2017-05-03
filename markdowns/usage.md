@@ -1,4 +1,4 @@
-#SSE & AVX usage
+# SSE & AVX usage
 
 ## Intrinsic functions
 

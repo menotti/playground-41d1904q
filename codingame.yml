@@ -6,10 +6,8 @@ plan:
     statement: markdowns/usage.md
   - title: Prerequisites
     statement: markdowns/prereq.md
-  - title: "SSE and AVX Usage"
-    statement: markdowns/usage.md
-  - title: Prerequisites
-    statement: markdowns/prereq.md
+  - title: "Autovectorization"
+    statement: markdowns/autovector.md
   - title: "First AVX Code: SQRT calculation"
     statement: markdowns/sqrt.md
   - title: "Final Words"
