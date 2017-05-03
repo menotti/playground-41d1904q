@@ -1,13 +1,8 @@
-#pragma GCC optimize("Ofast","unroll-loops","omit-frame-pointer") //Optimization flags
+#pragma GCC optimize("O3","unroll-loops","omit-frame-pointer","inline") //Optimization flags
 #pragma GCC option("arch=native","tune=native","no-zero-upper") //Enable AVX
 #pragma GCC target("avx")  //Enable AVX
 #include <x86intrin.h> //SSE Extensions
 #include <bits/stdc++.h> //All main STD libraries
-using namespace std;
-using namespace std::chrono;
- 
-high_resolution_clock::time_point now = high_resolution_clock::now();
-#define TIME duration_cast<duration<double>>(high_resolution_clock::now() - now).count()
 
 const int N = 64000000; //Number of tests
 const int V = N/8;      //Vectorized size
@@ -21,17 +16,23 @@ inline void normal_sqrt()
         lineal[i] = sqrtf(lineal[i]);
 }
 
-//Exercise 1: Create a vectorized version of "linear" function.
+//Exercise 1: Create a vectorized version of the "linear" function.
 //Please note the following:
 // "vectorized" array is size V=N/8, because each __m256 variable holds 8 floats.
 // sqrtf(const float& f) vectorized function is: _mm256_sqrt_ps(const __m256& v)
 __m256 __attribute__((aligned(32))) vectorized[V]; //Vectorized array
 inline void avx_sqrt()
 {
-    for (int i = 0; i < V; ++i)
-        vectorized[i] = _mm256_sqrt_ps(vectorized[i]);
+  //****** Add AVX code here*******
 }
  
+ 
+using namespace std;
+using namespace std::chrono;
+ 
+high_resolution_clock::time_point now = high_resolution_clock::now();
+#define TIME duration_cast<duration<double>>(high_resolution_clock::now() - now).count()
+
 int main()
 {
 //Data initialization	
@@ -41,17 +42,33 @@ int main()
 		 {  vectorized[i][v] = ((float)(i*8+v))+ 0.1335f; }
 	}
  
- //Normal sqrt benchmarking. 10*64 Million Sqrts
+ //Normal sqrt benchmarking. 20*64 Million Sqrts
     now = high_resolution_clock::now();
-    for (int i = 0; i < 10; ++i)
+    for (int i = 0; i < 20; ++i)
     normal_sqrt();
-    cerr << "Normal sqrtf: "<< TIME << endl;
+    double linear_time = TIME;
+    cerr << "Normal sqrtf: "<< linear_time << endl;
  
- //AVX vectorized sqrt benchmarking. 10*8*8 Million Sqrts
+ //AVX vectorized sqrt benchmarking. 20*8*8 Million Sqrts
     now = high_resolution_clock::now();
-    for (int i = 0; i < 10; ++i)
+    for (int i = 0; i < 20; ++i)
     avx_sqrt();
-    cerr << "AVX sqrtf : "<<TIME << endl;
+    double avx_time = TIME;
+    cerr << "AVX sqrtf : "<<avx_time << endl;
+	
+	//Check values
+	for (int i = 0; i < V; ++i) {
+		for (int v=0;v<8;++v)
+		 { 
+  	       if (abs(lineal[i*8+v] - vectorized[i][v]) > 0.00001f)
+		   {
+	         cerr << "ERROR: AVX sqrt is not the same as linear!!!";
+	         cerr << lineal[i*8+v]<<" <-> "<<vectorized[i][v]<<endl;
+			 return -1;
+		   }
+		 }
+	}
+	cerr << "Linear to AVX improvement : "<< (linear_time/avx_time*100)<<"%" << endl;
  
     return 0;
 }
