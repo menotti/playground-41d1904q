@@ -2,4 +2,4 @@
 
 SQRT Exercise
 
-@[Vectorized SQRT]({"stubs": ["sqrt/sqrt.cpp"], "command": "cd sqrt && cmake . && make && ./sqrt"})
+@[Vectorized SQRT]({"stubs": ["sqrt/sqrt.cpp"], "command": "cd sqrt && ../mycompile.sh ./sqrt"})
