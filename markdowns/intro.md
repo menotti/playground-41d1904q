@@ -7,16 +7,18 @@ As computation requeriments continues increasing, CPU designers decided to solve
 
 -  Adding more cores. This way Operating Systems can distribute running application among different cores. Also programs can create multiple threads to maximize core usage.
 -  Adding vector operations to each core. This solution allows to execute the same instructions to a vector of data. This can only be done at application level.
+-  Out-of-order execution of multiple instructions. Modern CPU's can execute up to four instructions at the same time if they are independent.
+Read http://www.agner.org/optimize/blog/read.php?i=417 for more information
 
 Vector registers started in 1997 with MMX instruction set, having 80-bit registers. After that SSE instruction sets were released (several versions of them, from SSE1 to SEE4.2), with 128-bit registers.
 In 2011 Intel released the Sandy Bridge architecture, with the AVX instruction set (256-bit registers).
-Last year the first AVX-512 CPU was released, with 512-bit registers (up to 16x 32-bit floats vector).
+In 2016 the first AVX-512 CPU was released, with 512-bit registers (up to 16x 32-bit floats vector).
 
-In this Course we'll focus both SSE and AVX instruction sets, because they are commonly found on recent processors. AVX-512 is out of scope, but most of the course can be reused, just by changing 256-bit register for 512-bit registers.
+In this Course we'll focus both SSE and AVX instruction sets, because they are commonly found on recent processors. AVX-512 is out of scope, but most of the course can be reused, just by changing 256-bit registers for the 512-bit counterparts (ZMM registers).
 
 ## SSE & AVX Registers
 
-SSE and AVX have 16 registers each one on 64Bits OS. On SSE they are referred as XMM0-XMM15, and on AVX they are called YMM0-YMM15. XMM registers are 128bit long, whereas YMM are 256 bit.
+SSE and AVX have 16 registers each one. On SSE they are referenced as XMM0-XMM15, and on AVX they are called YMM0-YMM15. XMM registers are 128bit long, whereas YMM are 256 bit.
 
 SSE adds three typedefs: `__m128` , `__m128d` and `__m128i`. Float, double (d) and integer (i) 
 respectively.
@@ -28,7 +30,7 @@ respectively.
 
 >**NOTE:** XMM and YMM overlays! XMM registers are treated as the lower half of the corresponding YMM register. This can bring some performance issues when mixing SSE and AVX code.
 
-Floating point datatypes (\_\_m128/d and \_\_m256/d) have only one kind of data structure. Because of this GCC allows accesing data components as an array.
+Floating point datatypes (\_\_m128, \_\_m128d, \_\_m256 and \_\_m256d) have only one kind of data structure. Because of this GCC allows accesing data components as an array.
  I.e: This is valid:
 ```cpp
   __m256 myvar = _mm256_set1_ps(6.665f); //Set all vector values to a single float

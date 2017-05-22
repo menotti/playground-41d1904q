@@ -1,7 +1,7 @@
 # SSE & AVX usage
 
 ## Intrinsic functions
-
+http://www.sandpile.org/x86/datatype.htm
 
 ## Performance penalties
 
@@ -10,5 +10,5 @@
 
 **SSE <-> AVX Transition Penalties**
 
-`VEZROUPPER`
-`VEZROALL`
+`VZEROUPPER`
+`VZEROALL`
