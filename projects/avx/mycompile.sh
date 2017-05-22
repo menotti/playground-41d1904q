@@ -1,8 +1,9 @@
 #!/bin/bash
 # Compile
 cd $1
-cmake .
+cmake . > /tmp/cmake_logs 2>&1
 if make > /tmp/compilation_logs 2>&1; then
+    cat /tmp/compilation_logs | grep vector
 	$2 $3 $4
 	if [ $? -eq 0 ]
 	then

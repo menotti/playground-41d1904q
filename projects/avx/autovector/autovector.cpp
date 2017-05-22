@@ -24,6 +24,7 @@ int main()
 	  result[j] = a[j]+b[j]-c[j]+3*(float)i;
 	 }
 	auto end_time = duration_cast<duration<double>>(high_resolution_clock::now() - now).count();
+	assert( result[2] == ( 2.0f + 0.1335f)+( 1.50f*2.0f + 0.9383f)-(0.33f*2.0f+0.1172f)+3*7999.0f);
     cerr << "Time used: "<< end_time << endl;
     return 0;
 }
