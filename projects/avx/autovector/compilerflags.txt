@@ -1,0 +1,1 @@
+-ftree-vectorize -fopt-info-vec-optimized
