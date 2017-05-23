@@ -1,5 +1,5 @@
 #pragma GCC optimize("O3","unroll-loops","omit-frame-pointer","inline") //Optimization flags
-#pragma GCC option("arch=native","tune=native","no-zero-upper") //Enable AVX
+#pragma GCC option("arch=native","tune=native","no-zeroupper") //Enable AVX
 #pragma GCC target("avx")  //Enable AVX
 #include <x86intrin.h> //SSE Extensions
 #include <bits/stdc++.h> //All main STD libraries
