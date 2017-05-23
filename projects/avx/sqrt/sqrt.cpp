@@ -68,7 +68,7 @@ int main()
 		   }
 		 }
 	}
-	cerr << "Linear to AVX improvement : "<< (linear_time/avx_time*100)<<"%" << endl;
+	cout << "CG> message -channel \"exercise results\" Linear to AVX improvement : "<< (linear_time/avx_time*100)<<"%" << endl;
  
     return 0;
 }

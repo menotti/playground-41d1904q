@@ -6,10 +6,10 @@ GCC is an advanced compiler, and with the optimization flags `-O3` or `-ftree-ve
 
 GCC won't notify anything about automatic vectorization unless some flags are enabled. If you need details of autovectorization results you can use the compiler flags:
 
-- `-fopt-info-vec-optimized` The compiler will notify what loops (by line N°) are being vector optimized.
-- `-fopt-info-vec-missed` Detailed info of loops not being vectorized, and a lot of detailed information.
-- `-fopt-info-vec-note` Detailed info of all loops and optimizations being done.
-- `-fopt-info-vec-all` All previous options together.
+- `-fopt-info-vec` or `-fopt-info-vec-optimized`: The compiler will notify what loops (by line N°) are being vector optimized.
+- `-fopt-info-vec-missed`: Detailed info of loops not being vectorized, and a lot of detailed information.
+- `-fopt-info-vec-note`: Detailed info of all loops and optimizations being done.
+- `-fopt-info-vec-all`: All previous options together.
 
 >**NOTE:** There are similar `-fopt-info-[options]-optimized` flags for other compiler optimizations, like `inline`: `-fopt-info-inline-optimized`
 
@@ -46,7 +46,7 @@ Not all loops can be vectorized, the loop has some strict requeriments.
  y[i] = 0.0f;
  }
 ```
-This is a vectorizable loop, the control flow never changes, and x1 and x2 values are just either one or another.
+This is a vectorizable loop, the control flow never changes, and `x[i]` and `y[i]` values are just either one or another.
 
 Read [Vectorization with Intel C++ Compilers](https://software.intel.com/sites/default/files/m/4/8/8/2/a/31848-CompilerAutovectorizationGuide.pdf) for additional info on autovectorization. This document is aimed for Intel Compilers, but it gives interesting and complete information about autovectorization.
 GCC compiler has one webpage with some information on 
