@@ -17,5 +17,5 @@ projects:
         root: /projects/avx
         buildCommand: "chmod +x prebuild.sh && ./prebuild.sh"
         runner:
-            name: codingame/cmake-gcc-runner
+            name: techio/cmake-gcc-runner
             version: 1.1.0-gcc-6.3
