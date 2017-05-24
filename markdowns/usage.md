@@ -8,7 +8,7 @@ Compilers wraps up assembler instructions as functions, and using them is as eas
 
 SSE/AVX intrinsic functions are composed with the following naming:
 
- ```
+ ```cpp
  _<vector_size>_<intrin_op>_<suffix>
  ```
  
