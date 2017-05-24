@@ -13,9 +13,9 @@ Expert. This is not an user-friendly Course. Manual vector extensions add many l
 ## Estimated Time:
 120 minutes.
 
-## Hardware requeriments
+## Hardware requirements
 Thanks to the virtualization technology at tech.io you'll only need a compatible browser to complete this course.
-Nevertheless, to use these technologies in real applications you'll have the following hardware requeriments:
+Nevertheless, to use these technologies in real applications you'll have the following hardware requirements:
 
 -  A processor with SSE or AVX instruction set.
 -  An OS with SSE/AVX support.

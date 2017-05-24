@@ -29,7 +29,7 @@ Non vectorized compilations will be slower than vectorized ones.
 
 ## Criterias for loop vectorization
 
-Not all loops can be vectorized, the loop has some strict requeriments.
+Not all loops can be vectorized, the loop has some strict requirements.
 
 - The loop count can't change once the loop starts. That means that end of the loop can be a dynamic variable, increasing or decreasing its value at will, but once the loop starts, it must be constant.
 - There are limitations to using `break` or `continue` sentences. Sometimes the compiler is clever enough to make it work, but in some cases the loop won't be vectorized. Try to add the  `if (j==27) continue;` as the line 23, right before the `result[j]` asignment, and rerun.
