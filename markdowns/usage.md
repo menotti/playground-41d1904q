@@ -59,7 +59,7 @@ Check [Avoiding AVX-SSE Transition Penalties](https://software.intel.com/en-us/a
 
 **Data loading, unloading and shuffling**
 
-Moving data back and forth from AVX registers could be expensive. In some cases if you have some structured data on a non-lineal way, sending this data to AVX vectors, calculate some functions and recovering this data is more expensive that simply calculating it on a linear way.
+Moving data back and forth from AVX registers could be expensive. In some cases if you have some structured data on a non-linear way, sending this data to AVX vectors, calculate some functions and recovering this data is more expensive that simply calculating it on a linear way.
 
 Some time ago I tried to simulate some physics game [Codingame's Poker Chip Race](https://www.codingame.com/multiplayer/bot-programming/poker-chip-race) with AVX. This game is based on N entities colliding on a 2D space, with circular collisions. So in that scenario I neded to calculate up to N*(N-1)/2 possible collisions. My first attempt was having normal entities classes (with position, radius, etc), and for the collision calculation I'll shuffle all possible entities collisions on AVX vectors, calculate collisions on AVX and return back to entities. Once I finished, the results I obtained were mediocre, not more than 10% improvement from linear code, with a lot of overhead and hard to mantain code.  After using a profiler I detected that 90% of the CPU time was being used on data loading and unloading. 
 

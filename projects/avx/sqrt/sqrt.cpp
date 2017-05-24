@@ -7,13 +7,13 @@
 const int N = 64000000; //Number of tests
 const int V = N/8;      //Vectorized size
 
-//Lineal function, 
-float lineal[N];
+//linear function, 
+float linear[N];
 __attribute__((optimize("no-tree-vectorize"))) //Force disable auto-vectorization
 inline void normal_sqrt()
 {
     for (int i = 0; i < N; ++i)
-        lineal[i] = sqrtf(lineal[i]);
+        linear[i] = sqrtf(linear[i]);
 }
 
 //Exercise 1: Create a vectorized version of the "linear" function.
@@ -36,7 +36,7 @@ high_resolution_clock::time_point now = high_resolution_clock::now();
 int main()
 {
 //Data initialization	
-    for (int i = 0; i < N; ++i) { lineal[i] = ((float)i)+ 0.1335f; }
+    for (int i = 0; i < N; ++i) { linear[i] = ((float)i)+ 0.1335f; }
     for (int i = 0; i < V; ++i) {
 		for (int v=0;v<8;++v)
 		 {  vectorized[i][v] = ((float)(i*8+v))+ 0.1335f; }
@@ -60,10 +60,10 @@ int main()
 	for (int i = 0; i < V; ++i) {
 		for (int v=0;v<8;++v)
 		 { 
-  	       if (abs(lineal[i*8+v] - vectorized[i][v]) > 0.00001f)
+  	       if (abs(linear[i*8+v] - vectorized[i][v]) > 0.00001f)
 		   {
 	         cerr << "ERROR: AVX sqrt is not the same as linear!!!";
-	         cerr << lineal[i*8+v]<<" <-> "<<vectorized[i][v]<<endl;
+	         cerr << linear[i*8+v]<<" <-> "<<vectorized[i][v]<<endl;
 			 return -1;
 		   }
 		 }

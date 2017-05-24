@@ -27,7 +27,7 @@ For reference, we assume the course is running on an Intel Haswell CPU, GCC v4.9
 Students will learn about automatic and manual vectorization, how to operate with these kind of registers, problems of execution parallelism in vectors and how to tackle them.
 
 ## Why should I learn?
-Vectorization of code can achieve about 300% to 600% performance increase over lineal code.
+Vectorization of code can achieve about 300% to 600% performance increase over linear code.
 On high performance programs this is a noticeable performance boost.
 
 Common usage:
