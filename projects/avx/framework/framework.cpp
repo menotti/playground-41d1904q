@@ -12,7 +12,7 @@ int main()
 {
     v8i a(4);
     v8f b(15.1f);
-    v8f c(3.3f);
-	cout << "CG> message -channel \"exercise results\" WORK IN PROGRESS: "<< a<<" "<<b<<"\n "<<b+c << endl;
+    v8f c(1.4f,3.3f,-12.5f,-33.4f,7.9f,-70.2f,191.3f,22.6f);
+	cout << "CG> message -channel \"exercise results\" WORK IN PROGRESS: "<< (a*a-2*a)<<" "<<(b/(2*b)-b)<<"\n "<<b+c << endl;
     return 0;
 }
