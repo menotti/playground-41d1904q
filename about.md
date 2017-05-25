@@ -34,14 +34,9 @@ Common usage:
 -  Intensive CPU calculations, like multimedia, encoding, simulations.
 
 
-
+*Delete this*
 https://tech.io/playgrounds/240/webconsole/content/file-and-directory-management-in-unix-systems
  cat /proc/cpuinfo
  gcc -march=native -dM -E - < /dev/null | egrep "SSE|AVX" | sort
 
-
- https://software.intel.com/sites/landingpage/IntrinsicsGuide/
- https://db.in.tum.de/~finis/x86-intrin-cheatsheet-v2.1.pdf
- 
- http://www.intel.com/content/dam/www/public/us/en/documents/manuals/64-ia-32-architectures-software-developer-vol-1-manual.pdf
  
