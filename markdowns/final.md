@@ -20,7 +20,8 @@ AVX and SSE vectorization is interesting, and the theorical benefit surpasses an
 
 **Cons**
 
-- Performance depends on the running hardware. Bad performance when there is massive data loading and unloading.
+- Performance depends on the running hardware.
+- Bad performance when there is massive data loading and unloading.
 - Data Flow can become very hard to control, and execution time of every data inside a vector affects all the vector execution time. You can't exit early until all data satisfy the exit condition.
 - Complex to code.
 
