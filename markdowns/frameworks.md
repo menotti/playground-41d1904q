@@ -45,7 +45,7 @@ In all vector Frameworks you'll find some special functions. These special funct
 
 **Horizontal functions**: Horizontal means that these functions operates within a single vector variable, by calculating some logical or arithmetic value.
 
-1. `horizontal_or(mask)`: Any vector component on the `mask` is true.
-2. `horizontal_add(vector)`: Sum of all components of the vector.
+1. **`horizontal_or`**`(mask)`: Any vector component on the `mask` is true.
+2. **`horizontal_add`**`(vector)`: Sum of all components of the vector.
 
 >**NOTE:** Agner Fog uses different classes for masks (with `b` suffix) , I just use the same vector classes for the sake of simplicity and code reduction.
