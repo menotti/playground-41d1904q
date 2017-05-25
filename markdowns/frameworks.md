@@ -28,7 +28,7 @@ In cases where you have limitations in code size, you'll need to strip down a sh
 
 I have some vector wrappers reduced in size, just focused on one or two types (for example, \_\_m256 8x float and \_\_m128i 8x short, to work with a vector size of 8, both on floats and on integers).
 
-@[Reduced Vector Wrappers]({"stubs": ["framework/framework.cpp","framework/vrandom.h","framework/vconvert.h","framework/v8i.h","framework/v8f.h"], "command": "./mycompile.sh framework ./framework"})
+@[Shortened Vector Wrappers]({"stubs": ["framework/framework.cpp","framework/vrandom.h","framework/vconvert.h","framework/v8i.h","framework/v8f.h"], "command": "./mycompile.sh framework ./framework"})
 
 Even being a reduced version, each vector datatype declaration takes up to 150 lines in average (plus some helper functions). Please use this wrappers as a reference for your own version, as it may contains bugs.
 

@@ -12,6 +12,10 @@ plan:
     statement: markdowns/sqrt.md
   - title: "SSE/AVX C++ Frameworks"
     statement: markdowns/frameworks.md
+  - title: "Masking and Conditional Load"
+    statement: markdowns/masking.md
+  - title: "Controlling the Data Flow"
+    statement: markdowns/dataflow.md
   - title: "Final Words"
     statement: markdowns/final.md
 projects:
