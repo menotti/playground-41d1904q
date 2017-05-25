@@ -4,6 +4,12 @@
 #define ALIGN __attribute__((aligned(32)))
 #define OP operator
 #define STI static inline
+#define F_0 _mm256_setzero_ps()
+#define F_1 C_F<1,1>()
+#define F_2 C_F<2,1>()
+#define F_3 C_F<3,1>()
+#define F_minus1 C_F<-1,1>()
+#define FOR0(i,n) for(int i=0;i<(n);++i)
 
 template <int i0>
 STI __m256 constant8f(){
@@ -73,7 +79,7 @@ STI v8f OP !(v8f const &a){return _mm256_cmp_ps(a.v,F_0,0);}
 
 
 STI v8f andnot(Pv8fab){return _mm256_andnot_ps(b.v,a.v);}	
-STI ostream &OP<<(ostream& output, const v8f& p){output<<"v8f: [";FOR0(i,8) output<<p.v[i]<<",";output << "]";return output;}
+STI std::ostream &OP<<(std::ostream& output, const v8f& p){output<<"v8f: [";FOR0(i,8) output<<p.v[i]<<",";output << "]";return output;}
 
 // Each byte in s must be either 0 (false) or 0xFFFFFFFF (true). No other values are allowed.
 STI v8f if_select(v8f const &s,Pv8fab){return _mm256_blendv_ps(b.v,a.v,s.v);}
@@ -140,7 +146,7 @@ STI float get(const v8f& a){return (float)a[0];}
 
 STI int compare(Pv8fab){
  int dif = 0;
- FOR0(i,8){if (abs(a[i] - b[i])>0.000001) ++dif;}
+ FOR0(i,8){if (std::abs(a[i] - b[i])>0.000001) ++dif;}
  return dif;
 } 
 

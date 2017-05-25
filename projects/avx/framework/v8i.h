@@ -3,6 +3,13 @@
 #define ALIGN16 __attribute__((aligned(16)))
 #define OP operator
 #define STI static inline
+#define I_0 _mm_setzero_si128()
+#define I_1 C_I<1>()
+#define I_2 C_I<2>()
+#define I_3 C_I<3>()
+#define I_minus1 C_I<-1>()
+#define FOR0(i,n) for(int i=0;i<(n);++i)
+
 
 //SSE short 16-bit integers signed 8x16=128bits
 class v8i{ 
@@ -83,15 +90,15 @@ switch(b) {    //Baaaaaaaad way :S
  case 8:return a>>3; case 16:return a>>4; case 32:return a>>5;
  case 64:return a>>6;case 128:return a>>7;case 256:return a>>8;        
  default: break;}   
-    int16_t d[I_SIZE];_mm_storeu_si128((__m128i*)d,a.v);
-    FOR0(i,I_SIZE) d[i] /= b; return _mm_loadu_si128((__m128i const*)d);
+    int16_t d[8];_mm_storeu_si128((__m128i*)d,a.v);
+    FOR0(i,8) d[i] /= b; return _mm_loadu_si128((__m128i const*)d);
 }
 STI v8i OP /(Pv8iab){ //Baaaaaaaad way :S
-    int16_t d[I_SIZE]; _mm_storeu_si128((__m128i*)d,a.v);
-	FOR0(i,I_SIZE) d[i] /= b[i];return _mm_loadu_si128((__m128i const*)d);
+    int16_t d[8]; _mm_storeu_si128((__m128i*)d,a.v);
+	FOR0(i,8) d[i] /= b[i];return _mm_loadu_si128((__m128i const*)d);
 }
 STI v8i &OP /=(v8i &a,v8i const &b){a=a/b;return a;}
-STI ostream &OP<<(ostream& output, const v8i& p){output<<"v8i: [";FOR0(i,8) output<<p[i]<<",";output << "]";return output;}
+STI std::ostream &OP<<(std::ostream& output, const v8i& p){output<<"v8i: [";FOR0(i,8) output<<p[i]<<",";output << "]";return output;}
 // Each byte in s must be either 0 (false) or 0xFFFFFFFF (true). No other values are allowed.
 STI v8i if_select(v8i const &s,Pv8iab){return _mm_blendv_epi8(b.v,a.v,s.v);}
 STI v8i if_add(v8i const &f,Pv8iab){return a + (f&b);}
@@ -130,7 +137,7 @@ STI v8i rotate_left(v8i const & a, int16_t b) {
 STI v8i rotate_right(v8i const & a, int16_t b) {return rotate_left(a,-b);}
 
 template <int16_t i0,int16_t i1,int16_t i2,int16_t i3,int16_t i4,int16_t i5,int16_t i6,int16_t i7>
-STI v8i C_I(){static const union {int16_t f[I_SIZE];v8i ymm;} u = {{i0,i1,i2,i3,i4,i5,i6,i7}}; return u.ymm;}
+STI v8i C_I(){static const union {int16_t f[8];v8i ymm;} u = {{i0,i1,i2,i3,i4,i5,i6,i7}}; return u.ymm;}
 template <int16_t i0>
-STI v8i C_I(){static const union {int16_t f[I_SIZE];v8i ymm;} u = {{i0,i0,i0,i0,i0,i0,i0,i0}}; return u.ymm;}
+STI v8i C_I(){static const union {int16_t f[8];v8i ymm;} u = {{i0,i0,i0,i0,i0,i0,i0,i0}}; return u.ymm;}
 

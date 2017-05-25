@@ -1,25 +1,28 @@
-#define OP operator
-#define STI static inline
+using namespace std;
+//#define OP operator
+//#define STI static inline
+//#define FOR0(i,n) for(int i=0;i<(n);++i)
+typedef long long ll
 
-//{PRINT BITS
-STI array<string,256> loadstr_byte(){array<string,256>l;FOR0(i,256){l[i]="";for(int j=7;j>=0;--j)l[i]+=to_string((i>>j)&1);}return l;}
-array<string,256> str_byte=loadstr_byte();
+/* //{PRINT BITS
+STI std::array<string,256> loadstr_byte(){std::array<string,256>l;FOR0(i,256){l[i]="";for(int j=7;j>=0;--j)l[i]+=to_string((i>>j)&1);}return l;}
+std::array<string,256> str_byte=loadstr_byte();
 STI string printbits(const uint8_t& p){return str_byte[(uint8_t)p];}
-//}
+//}*/
 
 //{Stopwatch
  #define TIMEOUT0_0 400000 
  #define TIMEOUT0_1 980000 
  #define TIMEOUTN_0 22000  
  #define TIMEOUTN_1 46500  
-#define Now() chrono::high_resolution_clock::now()
+ #define Now() std::chrono::high_resolution_clock::now()
 static struct Stopwatch {
-	chrono::high_resolution_clock::time_point c_time,c_timeout;
+	std::chrono::high_resolution_clock::time_point c_time,c_timeout;
 	void Start() {c_time=Now();}
-	void setTimeout(int us){c_timeout=c_time+chrono::microseconds(us);}
+	void setTimeout(int us){c_timeout=c_time+std::chrono::microseconds(us);}
 	inline bool Timeout(){return Now()>c_timeout;}
-	ll EllapsedMicroseconds(){return chrono::duration_cast<chrono::microseconds>(Now()-c_time).count();}
-	ll EllapsedMilliseconds(){return chrono::duration_cast<chrono::milliseconds>(Now()-c_time).count();}
+	ll EllapsedMicroseconds(){return std::chrono::duration_cast<chrono::microseconds>(Now()-c_time).count();}
+	ll EllapsedMilliseconds(){return std::chrono::duration_cast<chrono::milliseconds>(Now()-c_time).count();}
 } stopwatch;
 //}
 
