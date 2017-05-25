@@ -5,7 +5,7 @@
 Working with intrinsic functions directly can be complicated to code, and to maintain it. The problem is that intrinsic name are long, and arithmetic operations comes as function notation: `add(a,b)` instead of `a+b`.
 The following code is hard to read:
 ```cpp
-x = _mm256_div_ps(_mm256_add_ps(b,_mm256_sqrt_ps(_mm256_sub_ps(_mm256_mul_ps(b,b),_mm256_mul_ps(_mm256_mul_ps(a,c),_mm256_set1_ps(4.0f))))),_mm256_mul_ps(a,_mm256_set1_ps(2.0f)));
+x = _mm256_div_ps(_mm256_add_ps(b , _mm256_sqrt_ps(_mm256_sub_ps(_mm256_mul_ps(b , b) , _mm256_mul_ps(_mm256_mul_ps(a , c),_mm256_set1_ps(4.0f))))) , _mm256_mul_ps(a,_mm256_set1_ps(2.0f)));
 ```
 Pretty simple, right?. On the other hand this wrapped version is very readable:
 ```cpp
@@ -26,9 +26,9 @@ Among others, you can use these two frameworks:
 Unfortunately these two frameworks are huge in size, at least for competitive programming where code is limited to hundred of KBs or less.
 In cases where you have limitations in code size, you'll need to strip down a shorter version of one of these frameworks.
 
-I have some vector wrappers reduced in size, just focused on one or two types (for example, __m256 8x float and __m128i 8x short, to work with a vector size of 8, both on floats and on integers).
+I have some vector wrappers reduced in size, just focused on one or two types (for example, \_\_m256 8x float and \_\_m128i 8x short, to work with a vector size of 8, both on floats and on integers).
 
-@[Reduced Vector Wrappers]({"stubs": ["framework/main.cpp","framework/helpers.h","framework/v8i.h","framework/v8f.h"], "command": "./mycompile.sh framework ./framework"})
+@[Reduced Vector Wrappers]({"stubs": ["framework/framework.cpp","framework/helpers.h","framework/v8i.h","framework/v8f.h"], "command": "./mycompile.sh framework ./framework"})
 
 Wrapper classes can add overhead to the calls, thus reducing performance. But in my opinion working with intrinsic functions directly is hardly maintainable, cumbersome and prone to errors. 
 From now on I'll use wrapper classes to abstract the code from the underlying intrinsics.
