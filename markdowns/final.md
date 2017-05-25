@@ -16,7 +16,7 @@ AVX and SSE vectorization is interesting, and the theorical benefit surpasses an
 **Pros**
 
 - Potential gains of 500%-700% performance versus a linear code.
-- Similarities with CUDA programming, vectorization at GPU level.
+- Similarities with CUDA programming, the vectorization at GPU level.
 
 **Cons**
 
