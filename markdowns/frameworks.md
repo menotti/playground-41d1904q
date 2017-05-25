@@ -2,7 +2,7 @@
 
 ## Intrinsics functions complexity
 
-Working with intrinsic functions directly can be complicated to code, and to maintain it. The problem is that intrinsic name are long, and arithmetic operations comes as function notation: `add(a,b)` instead of `a+b`.
+Working with intrinsic functions directly can be complicated to code, and to maintain it. The problem is that intrinsic names are long, and arithmetic operations comes as function notation: `add(a,b)` instead of `a+b`.
 The following code is hard to read:
 ```cpp
 x = _mm256_div_ps(_mm256_add_ps(b , _mm256_sqrt_ps(_mm256_sub_ps(_mm256_mul_ps(b , b) , _mm256_mul_ps(_mm256_mul_ps(a , c),_mm256_set1_ps(4.0f))))) , _mm256_mul_ps(a,_mm256_set1_ps(2.0f)));
