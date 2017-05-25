@@ -1,7 +1,7 @@
 #pragma GCC optimize("O3","unroll-loops","omit-frame-pointer","inline") //Optimization flags
 #pragma GCC option("arch=native","tune=native","no-zeroupper") //Enable AVX
 #pragma GCC target("avx") //Enable AVX
-#include <x86intrin.h>    //SSE Extensions
+#include <x86intrin.h>    //AVX/SSE Extensions
 #include <bits/stdc++.h>  //All main STD libraries
 #include "v8i.h"          //AVX 8x float vectors
 #include "v8f.h"          //SSE 8x short vectors
@@ -19,7 +19,7 @@ int main()
     cout << "a+b :"<<a+b<<endl;
     cout << "a-b :"<<a-b<<endl;
     cout << "a*b :"<<a*b<<endl; //Overflow!!!!! Remember that v8i is only 16-bit signed
-    cout << "a/b :"<<a/b<<endl;
+    cout << "a/b :"<<a/b<<endl; //emulated, slow
     cout << "a>b :"<<(a>b)<<endl; //true is -1, because it's a mask with all 16 bits set to 1.
     cout << "a==b:"<<(a==b)<<endl;
     cout << "Irandom(1,1348):"<<(Irandom<1,1348>())<<endl;    
@@ -37,7 +37,5 @@ int main()
     cout << "c>d :"<<(c>d)<<endl; //true is -nan, because it's a mask with all 32 bits set to 1.
     cout << "c==d:"<<(c==d)<<endl;
     cout << "Frandom(1,1348):"<<(Frandom<1,1348>())<<endl;    
-    
-	cout << "CG> message -channel \"exercise results\" ALL TEST COMPLETED" << endl;
     return 0;
 }

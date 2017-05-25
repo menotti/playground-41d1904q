@@ -38,13 +38,13 @@ In all vector Frameworks you'll find some special functions. These special funct
 
 Blend-based functions: Blend is the process to conditionally load vector values based on a mask. This will be explained better on next lessons. In Agner Fog's and my wrapper derived functions are:
 
-1. `result = *if_select*(mask,value_true,value_false)`: Conditional load of a vector based on a mask. If the `mask` is true for a vector componen, `value_true` is loaded for it, `value_false` otherwise. It's a "fake" `if`.
-2. `result = *if_add*(mask,value,add_when_true)`: Conditional addition. Result is `value + (mask? add_when_true:0)`, for each vector component.
-3. *`if_sub`, `if_mul`, `if_div`*: Similar to `if_add`, just with a different arithmetic operation.
+1. **`if_select`**`(mask,value_true,value_false)`: Conditional load of a vector based on a mask. If the `mask` is true for a vector componen, `value_true` is loaded for it, `value_false` otherwise. It's a "fake" `if`.
+2. **`if_add`**`(mask,value,add_when_true)`: Conditional addition. Result is `value + (mask? add_when_true:0)`, for each vector component.
+3. **`if_sub`, `if_mul`, `if_div`**: Similar to `if_add`, just with a different arithmetic operation.
 
 Horizontal functions: Horizontal means that these functions operates within a single vector variable, by calculating some logical or arithmetic value.
 
-1. `bool horizontal_or(mask)`: Any vector component on the `mask` is true.
+1. `horizontal_or(mask)`: Any vector component on the `mask` is true.
 2. `horizontal_add(vector)`: Sum of all components of the vector.
 
 >**NOTE:** Agner Fog uses different classes for masks (with `b` suffix) , I just use the same vector classes for the sake of simplicity and code reduction.
