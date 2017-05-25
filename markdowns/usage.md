@@ -21,7 +21,9 @@ It's a complete reference for any intrinsic function available on SSE/AVX, with 
 There is also a [x86 Intrinsics Cheat Sheet](https://db.in.tum.de/~finis/x86-intrin-cheatsheet-v2.2.pdf?lang=en)
 But it's harder to review, more complex.
 
-## Lack of Integer division
+## Missing functions in SSE/AVX intrinsics
+
+** Lack of integer division **
 
 For some reason SSE and AVX lack integer division operators. There are three ways to overcome this:
 
@@ -30,6 +32,14 @@ For some reason SSE and AVX lack integer division operators. There are three way
 2. Converting the integer vector to float, divide them, and convert again to integer.
 
 3. On known divisors at compile time, there are some magic numbers to convert division by constants into multiplications. Check [libdivide](https://libdivide.com/) and [Exact Division by Constants](http://www.icodeguru.com/Embedded/Hacker's-Delight/077.htm) for more info
+
+** Lack of trigonometric functions **
+
+There aren't trigonometric functions on vector intrinsic functions. Possible solutions are calculating them as linear code (one by one in each vector value), or creating approximation functions. Taylor Series and Remez approximations give good results.
+
+** Lack of random number generator **
+
+Additionally, there aren't random number generators for vectors as intrinsics, but it's simple to recreate a good pseudorandom generator from a linear version. Just be sure about the bits used on the pseudorandom number generator, 32 or 64bit RNG are preferred to fill vectors. 
 
 4. On power of two divisions, using the bit shift operation. Division of integer 2 is the same that a right shift. This can only be done if all the vector is divided by the same power of two number. Watch out with the right shift on signed numbers! Use sign aware bit shifts.
 

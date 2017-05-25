@@ -10,6 +10,8 @@ plan:
     statement: markdowns/usage.md
   - title: "First AVX Code: SQRT calculation"
     statement: markdowns/sqrt.md
+  - title: "SSE/AVX C++ Frameworks"
+    statement: markdowns/frameworks.md
   - title: "Final Words"
     statement: markdowns/final.md
 projects:
