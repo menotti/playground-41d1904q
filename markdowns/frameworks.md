@@ -11,7 +11,7 @@ Pretty simple, right?. On the other hand this wrapped version is very readable:
 ```cpp
 x = (b + sqrt( b*b - a*c*4.0f))/(a*2.0f);
 ```
-It's just working with floats, you just need to remember that these variables are vectors.
+It's like working with floats, you just need to remember that these variables are vectors.
 
 ## C++ Frameworks for SIMD computation
 
