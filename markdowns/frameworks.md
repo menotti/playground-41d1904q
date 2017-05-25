@@ -2,7 +2,7 @@
 
 ## Intrinsics functions complexity
 
-Working with intrinsic functions directly can be complicated to code, and to maintain it. The problem is that intrinsic names are long, and arithmetic operations comes as function notation: `add(a,b)` instead of `a+b`.
+Working with intrinsic functions directly can be complicated to code and to maintain it. The problem is that intrinsic names are long, and arithmetic operations comes as function notation: `add(a,b)` instead of `a+b`.
 The following code is hard to read:
 ```cpp
 x = _mm256_div_ps(_mm256_add_ps(b , _mm256_sqrt_ps(_mm256_sub_ps(_mm256_mul_ps(b , b) , _mm256_mul_ps(_mm256_mul_ps(a , c),_mm256_set1_ps(4.0f))))) , _mm256_mul_ps(a,_mm256_set1_ps(2.0f)));
@@ -15,7 +15,7 @@ It's like working with floats, you just need to remember that these variables ar
 
 ## C++ Frameworks for SIMD computation
 
-There are existing frameworks that wraps vector datatypes inside new classes. Then they overload arithmetic, logic and asignment operators to simplify the calculations.
+There are existing frameworks that wraps vector datatypes inside new classes. Then they overload arithmetic, logic and asignment operators to simplify calculations.
 Among others, you can use these two frameworks:
 
 1. [Agner Fog's C++ vector class library](http://www.agner.org/optimize/#vectorclass). Complete and updated regularly. Includes trigonometric functions.
@@ -30,5 +30,6 @@ I have some vector wrappers reduced in size, just focused on one or two types (f
 
 @[Reduced Vector Wrappers]({"stubs": ["framework/framework.cpp","framework/helpers.h","framework/v8i.h","framework/v8f.h"], "command": "./mycompile.sh framework ./framework"})
 
+Even being a reduced version, each vector datatype declaration takes up to 150 lines in average (plus some helper functions).
 Wrapper classes can add overhead to the calls, thus reducing performance. But in my opinion working with intrinsic functions directly is hardly maintainable, cumbersome and prone to errors. 
 From now on I'll use wrapper classes to abstract the code from the underlying intrinsics.
