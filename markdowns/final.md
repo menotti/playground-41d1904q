@@ -2,12 +2,12 @@
 
 On this course you have a good grasp about manual and automatic CPU vectorization:
 
-1- Hardware and software requirements for using SSE and AVX instructions on your code.
-2- Vector datatypes available.
-3- Information about how to check the autovectorization usage, and hints about loops that can be autovectorized.
-4- C++ Vector Frameworks.
-5- Masking and conditional load.
-6- Controlling the Data Flow.
+1. Hardware and software requirements for using SSE and AVX instructions on your code.
+2. Vector datatypes available.
+3. Information about how to check the autovectorization usage, and hints about loops that can be autovectorized.
+4. C++ Vector Frameworks.
+5. Masking and conditional load.
+6. Controlling the Data Flow.
 
 ### Pros and Cons
 
@@ -15,8 +15,8 @@ AVX and SSE vectorization is interesting, and the theorical benefit surpasses an
 
 **Pros**
 
-- Potential gains of 500%-700% performance versus a linear code.
-- Similarities with CUDA programming, the vectorization at GPU level.
+- Potential gains of 500% to 700% performance versus a linear code.
+- Similarities with CUDA, the vectorization programming at GPU level.
 
 **Cons**
 
@@ -37,7 +37,7 @@ AVX-enabled simulations can be achieved on some Codingame Multiplayer Games:
 - [Coders Strike Back](https://www.codingame.com/multiplayer/bot-programming/coders-strike-back) My AVX version reached between 2.5 and 3.5 Million simulations/turn, with turns of 150 milliseconds. This is done by parallelizing 8 game state simulations at once. An older version with serialized calculations (that is, having data outside AVX, shuffling it inside AVX vectors, calculate, and unload the result) only achieved 600k sims/turn.
 - [Poker Chip Racer](https://www.codingame.com/multiplayer/bot-programming/poker-chip-race) Performance is very dependant on number of entities, between 100k and 1.5M sims/turn. Turns are 150ms too.
 
-I'm pretty sure many other games can be parallelized and simulated on AVX/SSE vectors.
+Many other games can be parallelized and simulated using AVX/SSE vectors.
 
 ### Useful links
 
