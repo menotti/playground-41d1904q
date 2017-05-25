@@ -5,12 +5,14 @@
 ### Pros and Cons
 
 **Pros**
-Potential gains 500%-700%
+
+- Potential gains 500%-700%
 
 **Cons**
-Depends on hardware
-Complex to code
-Data Flow can become very hard to control
+
+- Depends on hardware
+- Complex to code
+- Data Flow can become very hard to control
 
 ### Further Courses
 
