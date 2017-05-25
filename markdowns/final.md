@@ -24,6 +24,7 @@ AVX and SSE vectorization is interesting, and the theorical benefit surpasses an
 - Bad performance when there is massive data loading and unloading.
 - Data Flow can become very hard to control, and execution time of every data inside a vector affects all the vector execution time. You can't exit early until all data satisfy the exit condition.
 - Complex to code.
+- Lack of intrinsic functions: Trigonometry, random numbers, integer division.
 
 ### Further Courses
 
