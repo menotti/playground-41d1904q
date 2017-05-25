@@ -11,7 +11,7 @@ Pretty simple, right?. On the other hand this wrapped version is very readable:
 ```cpp
 x = (b + sqrt( b*b - a*c*4.0f))/(a*2.0f);
 ```
-It's like working with floats, you just need to remember that these variables are vectors.
+It's like working with floats, you just need to remember that these variables are vectors. As you may notice, the wrapper allows arithmetic operations of a vector with an scalar (vector * scalar = vector).
 
 ## C++ Frameworks for SIMD computation
 
@@ -28,8 +28,23 @@ In cases where you have limitations in code size, you'll need to strip down a sh
 
 I have some vector wrappers reduced in size, just focused on one or two types (for example, \_\_m256 8x float and \_\_m128i 8x short, to work with a vector size of 8, both on floats and on integers).
 
-@[Reduced Vector Wrappers]({"stubs": ["framework/framework.cpp","framework/helpers.h","framework/v8i.h","framework/v8f.h"], "command": "./mycompile.sh framework ./framework"})
+@[Reduced Vector Wrappers]({"stubs": ["framework/framework.cpp","framework/vrandom.h","framework/vconvert.h","framework/v8i.h","framework/v8f.h"], "command": "./mycompile.sh framework ./framework"})
 
-Even being a reduced version, each vector datatype declaration takes up to 150 lines in average (plus some helper functions).
+Even being a reduced version, each vector datatype declaration takes up to 150 lines in average (plus some helper functions). Please use this wrappers as a reference for your own version, as it may contains bugs.
 Wrapper classes can add overhead to the calls, thus reducing performance. But in my opinion working with intrinsic functions directly is hardly maintainable, cumbersome and prone to errors. 
 From now on I'll use wrapper classes to abstract the code from the underlying intrinsics.
+
+In all vector Frameworks you'll find some special functions. These special functions will be widely used on next lessons, if you don't understand it at first glance don't worry, you'll eventually understand the logic behind them.
+
+Blend-based functions: Blend is the process to conditionally load vector values based on a mask. This will be explained better on next lessons. In Agner Fog's and my wrapper derived functions are:
+
+1. `result = *if_select*(mask,value_true,value_false)`: Conditional load of a vector based on a mask. If the `mask` is true for a vector componen, `value_true` is loaded for it, `value_false` otherwise. It's a "fake" `if`.
+2. `result = *if_add*(mask,value,add_when_true)`: Conditional addition. Result is `value + (mask? add_when_true:0)`, for each vector component.
+3. *`if_sub`, `if_mul`, `if_div`*: Similar to `if_add`, just with a different arithmetic operation.
+
+Horizontal functions: Horizontal means that these functions operates within a single vector variable, by calculating some logical or arithmetic value.
+
+1. `bool horizontal_or(mask)`: Any vector component on the `mask` is true.
+2. `horizontal_add(vector)`: Sum of all components of the vector.
+
+>**NOTE:** Agner Fog uses different classes for masks (with `b` suffix) , I just use the same vector classes for the sake of simplicity and code reduction.

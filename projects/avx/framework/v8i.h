@@ -1,21 +1,15 @@
+//{SSE x8 short int. 16-bit x 8=128bits
+
 #define Pv8iab v8i const &a,v8i const &b
 #define Pv8ias v8i const &a,int16_t b
 #define ALIGN16 __attribute__((aligned(16)))
 #define OP operator
 #define STI static inline
-#define I_0 _mm_setzero_si128()
-#define I_1 C_I<1>()
-#define I_2 C_I<2>()
-#define I_3 C_I<3>()
-#define I_minus1 C_I<-1>()
-#define FOR0(i,n) for(int i=0;i<(n);++i)
 
-
-//SSE short 16-bit integers signed 8x16=128bits
 class v8i{ 
 public:
   __m128i ALIGN16 v;	
- v8i(){v= I_0;}
+ v8i(){v= _mm_setzero_si128();}
  v8i(int f){v=_mm_set1_epi16((int16_t)f);}
  v8i(int16_t i0,int16_t i1,int16_t i2,int16_t i3,int16_t i4,int16_t i5,int16_t i6,int16_t i7){v=_mm_setr_epi16(i0, i1, i2, i3,i4,i5,i6,i7);}
  v8i(__m128i const& x){v=x;}
@@ -25,7 +19,7 @@ public:
   void store(int16_t * p) {_mm_storeu_si128((__m128i*)p,v);}
   void storea(int16_t * p){_mm_store_si128((__m128i*)p, v);}
   void insert(uint32_t index, int16_t value) {
-        switch(index) {
+        switch(index) { //Yeah, blame GCC for not allowing variables as 3rd parameter.
         case 0:v = _mm_insert_epi16(v,value,0);  break;
         case 1:v = _mm_insert_epi16(v,value,1);  break;
         case 2:v = _mm_insert_epi16(v,value,2);  break;
@@ -36,7 +30,7 @@ public:
         case 7:v = _mm_insert_epi16(v,value,7);  break;  }
     }
   int16_t OP [] (uint32_t index) const {
-    switch(index) {
+    switch(index) {  //Blame GCC
 		case 0:return (int16_t)_mm_extract_epi16(v,0);
 		case 1:return (int16_t)_mm_extract_epi16(v,1);
 		case 2:return (int16_t)_mm_extract_epi16(v,2);
@@ -47,6 +41,13 @@ public:
 	    case 7:return (int16_t)_mm_extract_epi16(v,7); }    
   }
 };
+//Constant creation via templates
+template <int16_t i0,int16_t i1,int16_t i2,int16_t i3,int16_t i4,int16_t i5,int16_t i6,int16_t i7>
+STI v8i C_I(){static const union {int16_t f[8];v8i ymm;} u = {{i0,i1,i2,i3,i4,i5,i6,i7}}; return u.ymm;}
+template <int16_t i0>
+STI v8i C_I(){static const union {int16_t f[8];v8i ymm;} u = {{i0,i0,i0,i0,i0,i0,i0,i0}}; return u.ymm;}
+
+//Operators
 STI v8i OP +(Pv8iab){return _mm_add_epi16(a.v,b.v);}
 STI v8i OP +(Pv8ias){return _mm_add_epi16(a.v,_mm_set1_epi16((int16_t)b));}
 STI v8i OP -(Pv8iab){return _mm_sub_epi16(a.v,b.v);}
@@ -91,14 +92,14 @@ switch(b) {    //Baaaaaaaad way :S
  case 64:return a>>6;case 128:return a>>7;case 256:return a>>8;        
  default: break;}   
     int16_t d[8];_mm_storeu_si128((__m128i*)d,a.v);
-    FOR0(i,8) d[i] /= b; return _mm_loadu_si128((__m128i const*)d);
+    for(int i=0;i<(8);++i) d[i] /= b; return _mm_loadu_si128((__m128i const*)d);
 }
 STI v8i OP /(Pv8iab){ //Baaaaaaaad way :S
     int16_t d[8]; _mm_storeu_si128((__m128i*)d,a.v);
-	FOR0(i,8) d[i] /= b[i];return _mm_loadu_si128((__m128i const*)d);
+	for(int i=0;i<(8);++i) d[i] /= b[i];return _mm_loadu_si128((__m128i const*)d);
 }
 STI v8i &OP /=(v8i &a,v8i const &b){a=a/b;return a;}
-STI std::ostream &OP<<(std::ostream& output, const v8i& p){output<<"v8i: [";FOR0(i,8) output<<p[i]<<",";output << "]";return output;}
+STI std::ostream &OP<<(std::ostream& output, const v8i& p){output<<"v8i: [";for(int i=0;i<(8);++i) output<<p[i]<<",";output << "]";return output;}
 // Each byte in s must be either 0 (false) or 0xFFFFFFFF (true). No other values are allowed.
 STI v8i if_select(v8i const &s,Pv8iab){return _mm_blendv_epi8(b.v,a.v,s.v);}
 STI v8i if_add(v8i const &f,Pv8iab){return a + (f&b);}
@@ -110,7 +111,6 @@ STI void when_add(v8i& res,const v8i &f,const v8i& b){res+=(f&b);}
 STI void when_sub(v8i& res,const v8i &f,const v8i& b){res-=(f&b);}
 STI void when_mul(v8i& res,const v8i &f,const v8i& b){res*=if_select(f,b,_mm_set1_epi16(1));}
 STI void when_div(v8i& res,const v8i &f,const v8i& b){res/=if_select(f,b,_mm_set1_epi16(1));}
-
 
 STI v8i max(Pv8iab){return _mm_max_epi16(a.v,b.v);}
 STI v8i min(Pv8iab){return _mm_min_epi16(a.v,b.v);}
@@ -125,7 +125,6 @@ STI int16_t horizontal_add8(v8i const & a) {
     return  sum4;                                          // sign extend to 32 bits
 }
 
-
 STI int get(const v8i&a,const int& b){return (int)a[b];}
 STI int get(const v8i&a){return (int)a[0];}
 
@@ -136,8 +135,4 @@ STI v8i rotate_left(v8i const & a, int16_t b) {
 }
 STI v8i rotate_right(v8i const & a, int16_t b) {return rotate_left(a,-b);}
 
-template <int16_t i0,int16_t i1,int16_t i2,int16_t i3,int16_t i4,int16_t i5,int16_t i6,int16_t i7>
-STI v8i C_I(){static const union {int16_t f[8];v8i ymm;} u = {{i0,i1,i2,i3,i4,i5,i6,i7}}; return u.ymm;}
-template <int16_t i0>
-STI v8i C_I(){static const union {int16_t f[8];v8i ymm;} u = {{i0,i0,i0,i0,i0,i0,i0,i0}}; return u.ymm;}
-
+//}

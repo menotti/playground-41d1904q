@@ -1,24 +1,19 @@
-//{AVX float x8
+//{AVX x8 float. 32-bit x 8=256bits
 #define Pv8fab v8f const &a,v8f const &b
 #define Pv8fas v8f const &a,float b
 #define ALIGN __attribute__((aligned(32)))
 #define OP operator
 #define STI static inline
-#define F_0 _mm256_setzero_ps()
-#define F_1 C_F<1,1>()
-#define F_2 C_F<2,1>()
-#define F_3 C_F<3,1>()
-#define F_minus1 C_F<-1,1>()
-#define FOR0(i,n) for(int i=0;i<(n);++i)
 
 template <int i0>
 STI __m256 constant8f(){
     static const union {int i[8];__m256 ymm;} u = {{i0,i0,i0,i0,i0,i0,i0,i0}};
     return u.ymm;}
+
 class v8f{ 
 public:
  __m256 ALIGN v;	
- v8f(){v= F_0;}
+ v8f(){v= _mm256_setzero_ps();}
  v8f(float f){v=_mm256_set1_ps(f);}
  v8f(float f0,float f1,float f2,float f3,float f4,float f5,float f6,float f7){v=_mm256_setr_ps(f0,f1,f2,f3,f4,f5,f6,f7);}
  v8f(__m256 const& x){v=x;}
@@ -30,6 +25,8 @@ public:
   inline void insert(int index, float value){ v[index]=value; }
   inline float OP [] (int index) const { return v[index];}
 };
+
+//Constant creation via templates
 template <int i0,int i1,int i2,int i3,int i4,int i5,int i6,int i7>
 STI v8f C_F(){static const union {int f[8];v8f ymm;} u = {{(float)i0,(float)i1,(float)i2,(float)i3,(float)i4,(float)i5,(float)i6,(float)i7}}; return u.ymm;}
 template <int i0,int i1>
@@ -38,6 +35,7 @@ STI v8f C_F(){
     return u.ymm;	
 	}
 
+//Operators
 STI v8f OP  +(Pv8fab){return _mm256_add_ps(a.v,b.v);}
 STI v8f OP  +(Pv8fas){return _mm256_add_ps(a.v,_mm256_set1_ps(b));}
 STI v8f &OP +=(v8f &a,v8f const &b){a=a+b;return a;}
@@ -51,7 +49,7 @@ STI v8f OP  /(Pv8fab){return _mm256_div_ps(a.v,b.v);}
 STI v8f OP  /(Pv8fas){return _mm256_div_ps(a.v,_mm256_set1_ps(b));}
 STI v8f &OP /=(v8f &a,v8f const &b){a=a/b;return a;}
 
-STI v8f OP -(v8f const &a){return _mm256_sub_ps(F_0,a.v);}
+STI v8f OP -(v8f const &a){return _mm256_sub_ps(_mm256_setzero_ps(),a.v);}
 STI v8f &OP ++(v8f &a){a=a+1;return a;}
 STI v8f  OP ++(v8f &a,int){v8f ALIGN a0(a);a=a+1;return a0;}
 STI v8f &OP --(v8f &a){a=a-1;return a;}
@@ -74,24 +72,24 @@ STI v8f OP ||(Pv8fab){return _mm256_or_ps(a.v,b.v);}
 STI v8f OP ^(Pv8fab){return _mm256_xor_ps(a.v,b.v);}
 //STI v8f &OP ^=(v8f &a,v8f const &b){a=a^b;return a;}
 
-STI v8f OP !(v8f const &a){return _mm256_cmp_ps(a.v,F_0,0);}
+STI v8f OP !(v8f const &a){return _mm256_cmp_ps(a.v,_mm256_setzero_ps(),0);}
 //STI v8f OP ~(v8f const &a){return _mm_xor_si128(a.v, _mm_set1_epi32(-1));}
 
 
 STI v8f andnot(Pv8fab){return _mm256_andnot_ps(b.v,a.v);}	
-STI std::ostream &OP<<(std::ostream& output, const v8f& p){output<<"v8f: [";FOR0(i,8) output<<p.v[i]<<",";output << "]";return output;}
+STI std::ostream &OP<<(std::ostream& output, const v8f& p){output<<"v8f: [";for(int i=0;i<(8);++i) output<<p.v[i]<<",";output << "]";return output;}
 
 // Each byte in s must be either 0 (false) or 0xFFFFFFFF (true). No other values are allowed.
 STI v8f if_select(v8f const &s,Pv8fab){return _mm256_blendv_ps(b.v,a.v,s.v);}
 STI v8f if_add(v8f const &f,Pv8fab){return a + (f&b);}
 STI v8f if_sub(v8f const &f,Pv8fab){return a - (f&b);}
-STI v8f if_mul(v8f const &f,Pv8fab){return a*if_select(f,b,F_1);}
-STI v8f if_div(v8f const &f,Pv8fab){return a/if_select(f,b,F_1);}
+STI v8f if_mul(v8f const &f,Pv8fab){return a*if_select(f,b,C_F<1,1>());}
+STI v8f if_div(v8f const &f,Pv8fab){return a/if_select(f,b,C_F<1,1>());}
 STI void when_select(v8f& res,v8f const &s,const v8f&a){res=_mm256_blendv_ps(res.v,a.v,s.v);}
 STI void when_add(v8f& res,const v8f &f,const v8f& b){res+=(f&b);}
 STI void when_sub(v8f& res,const v8f &f,const v8f& b){res-=(f&b);}
-STI void when_mul(v8f& res,const v8f &f,const v8f& b){res*=if_select(f,b,F_1);}
-STI void when_div(v8f& res,const v8f &f,const v8f& b){res/=if_select(f,b,F_1);}
+STI void when_mul(v8f& res,const v8f &f,const v8f& b){res*=if_select(f,b,C_F<1,1>());}
+STI void when_div(v8f& res,const v8f &f,const v8f& b){res/=if_select(f,b,C_F<1,1>());}
 
 
 STI v8f max(Pv8fab){return _mm256_max_ps(a.v,b.v);}
@@ -123,8 +121,6 @@ STI v8f OP %(Pv8fas){ //Slow due to division
     return _mm256_sub_ps(a.v, base);
 }
 
-
-
 STI v8f approx_recipr(v8f const &a){return _mm256_rcp_ps(a.v);}
 STI v8f approx_rsqrt(v8f const &a) {return _mm256_rsqrt_ps(a.v);}
 STI v8f infinite8f() {return constant8f<0x7F800000>();}
@@ -146,7 +142,7 @@ STI float get(const v8f& a){return (float)a[0];}
 
 STI int compare(Pv8fab){
  int dif = 0;
- FOR0(i,8){if (std::abs(a[i] - b[i])>0.000001) ++dif;}
+ for(int i=0;i<(8);++i){if (std::abs(a[i] - b[i])>0.000001) ++dif;}
  return dif;
 } 
 
