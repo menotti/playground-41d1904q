@@ -23,8 +23,9 @@ The next exercise has some timeout problems due to a computationally expensive f
 
 By using `horizontal_or` you can also break a loop early. With autovectorization you can't get this optimization, but with manual vectorization it's possible, and preferred.
 
-On this exercise you are calculating a combo score, you want to end the simulation once your reach more than 1700 points on any of the parallel simulations, and return that max score.
-@[Early exiting a loop]({"stubs": ["exitloop/exitloop.cpp","exitloop/vrandom.h","exitloop/vconvert.h","exitloop/v8i.h","exitloop/v8f.h"], "command": "./mycompile.sh exitloop ./exitloop"})
+On this exercise you are calculating a max combo score by doing 8 parallel simulations at once, with a limit of 200 turns.
+You want to end the simulation once your reach more than 1700 points on any of the parallel simulations, and return the max score (a float value, not the whole vector with all scores, just the max) and the turn where you get that score.
+@[Early exiting a loop]({"stubs": ["exitloop/exitloop.cpp","exitloop/v8f.h"], "command": "./mycompile.sh exitloop ./exitloop"})
 
 
 

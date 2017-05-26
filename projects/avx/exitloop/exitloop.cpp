@@ -3,39 +3,39 @@
 #pragma GCC target("avx") //Enable AVX
 #include <x86intrin.h>    //AVX/SSE Extensions
 #include <bits/stdc++.h>  //All main STD libraries
-#include "v8i.h"          //AVX 8x float vectors
 #include "v8f.h"          //SSE 8x short vectors
-#include "vconvert.h"     //Vector short <-> float conversions
-#include "vrandom.h"      //Pseudo-random numbers
 using namespace std;
- 
+
+int validateResult(const int& turn,const float& bestScore)
+{
+ cout << "Turn:"<<turn<<"  bestScore:"<< std::setprecision(10)<<bestScore<<endl;
+ if (turn != 133)
+ {
+     cout << "ERROR, Expected turn exit at 133 != "<<turn<<endl;
+     return -1;
+ }
+ if (bestScore != 1707.318481f)
+ {
+     cout << "ERROR, Expected a bestScore of 1707.318481f != "<< std::setprecision(10)<<bestScore<<endl;
+     return -1;
+ }
+ return 0;
+}
+
 int main()
 {
-    v8i a(250);
-    v8i b(1,-3,-4,6,20,250,-4003,4);
-    cout << "Wrapper Tests: Integer Vectors" <<endl;
-    cout << "a   :"<<a<<endl;
-    cout << "b   :"<<b<<endl;
-    cout << "a+b :"<<a+b<<endl;
-    cout << "a-b :"<<a-b<<endl;
-    cout << "a*b :"<<a*b<<endl; //Overflow!!!!! Remember that v8i is only 16-bit signed
-    cout << "a/b :"<<a/b<<endl; //emulated, slow
-    cout << "a>b :"<<(a>b)<<endl; //true is -1, because it's a mask with all 16 bits set to 1.
-    cout << "a==b:"<<(a==b)<<endl;
-    cout << "Irandom(1,1348):"<<(Irandom<1,1348>())<<endl;    
-    cout <<endl;
-
-    v8f c(15.1f);
-    v8f d(1.4f,3.3f,-12.5f,-33.4f,7.9f,-70.2f,15.1f,22.6f);    
-    cout << "Wrapper Tests: Float Vectors" <<endl;    
-    cout << "c   :"<<c<<endl;
-    cout << "d   :"<<d<<endl;
-    cout << "c+d :"<<c+d<<endl;
-    cout << "c-d :"<<c-d<<endl;
-    cout << "c*d :"<<c*d<<endl; 
-    cout << "c/d :"<<c/d<<endl;
-    cout << "c>d :"<<(c>d)<<endl; //true is -nan, because it's a mask with all 32 bits set to 1.
-    cout << "c==d:"<<(c==d)<<endl;
-    cout << "Frandom(1,1348):"<<(Frandom<1,1348>())<<endl;    
-    return 0;
+    int turn = 0;
+    v8f Scores(1.0f,3.0f,7.0f,13.4f,22.7f,0.01f,4.556f,9.7f); //Initial load
+    for (turn =0; turn < 200; ++turn)
+    {
+        Scores += ((float)(turn)/15.0f);
+        if ( turn == 40)  { Scores *= Scores/15.0f+2.0f;}
+        if ( turn == 70)  { Scores += if_select(Scores < 430.0f, 850.0f, 120.0f );  }
+        //EXERCISE: BREAK THE LOOP ONCE YOU REACH MORE THAN 1700 POINTS
+    }
+    cout << "Scores: "<<Scores<<endl;    
+    float bestScore = 0.0f;
+    //TODO:LOAD THE bestScore
+	
+    return validateResult(turn,bestScore);
 }
