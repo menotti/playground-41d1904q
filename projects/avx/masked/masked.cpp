@@ -10,6 +10,7 @@ inline v8f testConditions(const v8f& value)
 {
 //You need to return values as required on the previous statement
 //*** INSERT YOUR CODE HERE ***
+
 }
 
 inline bool validate(const v8f& test, const v8f& vector)
@@ -26,7 +27,7 @@ inline bool validate(const v8f& test, const v8f& vector)
     }
     if (abs(expected- vector[j])>0.00001f)
     {
-     cout << expected<<" "<< vector[j]<<endl;
+     cout << "Assert Error:"<< expected<<" "<< vector[j]<<endl;
      return false;
     }
  }
@@ -36,7 +37,7 @@ inline bool validate(const v8f& test, const v8f& vector)
 int main()
 {
     int validTests = 0;
-    int TotalTests = 10000;
+    int TotalTests = 1000;
     for (int i=0;i<TotalTests;++i)
     {
      float offset = -500.0f + (1000.0f*i)/TotalTests;

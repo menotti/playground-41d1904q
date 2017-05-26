@@ -2,7 +2,7 @@
 
 ## Masks in Vectors
 
-In the last lesson we presented the mask concept. As  it's a critical concept to control the data flow, it needs a better explanation.
+In the last lesson we presented the mask concept. As it's a critical concept to control the data flow, it needs a better explanation.
 
 A mask is the result of a logical operation between vectors. It has many similarities with booleans (they are the result of logical operations on single numbers, or other booleans), but internally each mask component must have either all 0 bits or all 1 bits.
 
@@ -47,6 +47,9 @@ if (value > 3.0f || (value <=-3.7f && value > -15.0f)) {
 ```
 @[Masked load]({"stubs": ["masked/masked.cpp","masked/v8f.h"], "command": "./mycompile.sh masked ./masked"})
 
+
+>**NOTE:** **`if_select`** IS NOT an intrinsic function name, it's my wrapper for **`_mm256_blendv_ps`**. Please note that `_mm256_blendv_ps` has a very very diferent parameter ordering! blendv has the mask as the last parameter!
+
 ## Performance 
 
 Conditional load using masks is a branchless conditional, it's not really a branch so it doesn't have branch mispredictions, and the CPU can make better use of out-of-order execution.
@@ -54,4 +57,4 @@ But this comes with a price. As it's branchless and all the conditional executio
 If you have a pretty complex calculation on value_false, it will be always calculated even if it happens only 0.00001% of the time.
 This can lead to performance problems if there are parts of the code rarely needed, but computationally very expensive.
 
-In the next lesson we will learn some ways to control the data flow, being able to exit loops 
+In the next lesson we will learn some ways to control the data flow, being able to exit loops early based on some conditions.
