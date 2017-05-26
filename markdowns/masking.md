@@ -31,7 +31,7 @@ Masks can be used to conditionally load values to vectors.
 In you recall the blend-based functions, all of them used masks to conditionally control the load of values in vectors:
 **`if_select`**`(mask,value_true,value_false)` can be represented as:
 
-![if_select](if_select.png)
+![if_select](ifselect.png)
 
 When the mask is set to `FALSE`, data is loaded from `value_false` vector, when `TRUE` it comes from `value_true`.
 The concept is simple but effective
