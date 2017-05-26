@@ -2,12 +2,12 @@
 
 On this course you have a good grasp about manual and automatic CPU vectorization:
 
-1. Hardware and software requirements for using SSE and AVX instructions on your code.
-2. Vector datatypes available.
-3. Information about how to check the autovectorization usage, and hints about loops that can be autovectorized.
-4. C++ Vector Frameworks.
-5. Masking and conditional load.
-6. Controlling the Data Flow.
+- Hardware and software requirements for using SSE and AVX instructions on your code.
+- Vector datatypes available.
+- Information about how to check the autovectorization usage, and hints about loops that can be autovectorized.
+- C++ Vector Frameworks.
+- Masking and conditional load.
+- Controlling the Data Flow.
 
 ### Pros and Cons
 

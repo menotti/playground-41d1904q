@@ -2,8 +2,8 @@
 
 ## The shared data flow issue
 
-In linear programming there isn't any problem creating conditional branches, `if`, `switch`, `continue` and `break` for controlling the data flow.
-You can have an infinite loop and just break when a condition is satisfied. 
+In linear programming there isn't any problem in creating conditional branches ( `if`, `switch`, `continue` and `break` ) for controlling the data flow.
+You can just have an infinite loop and break it when a condition is satisfied. 
 But as we saw in the previous lesson, a vector has not only a condition result, but N condition results at the same time. Part of the vector can be ready to exit the loop (because the vector data has reached the exit condition), but the rest of data still has active work to do before exiting. 
 
 >**NOTE:** If a vector component is already finished, *freeze* it, avoid doing any further calculations on it. This is done by masking them on any value assignment. The unfinished vector components will keep being updated, but finished ones don't. So if I have a 8x float vector, and components 0,1,4 and 7 have reached an end state, I'll need a mask `[false,false,true,true,false,true,true,false]` on each data loading.
@@ -15,8 +15,8 @@ When all values inside the mask are the same we indeed have a simple boolean, ei
 
 In my wrapper classes I use the `horizontal_or(mask)` function (that wraps `_xxx_testz_xx` intrinsics) . "Horizontal OR" checks if any value inside the mask is `true`, and in that case returns a single boolean with the `true` value, and `false` in any other case.
 
-The next exercise has some timeout problems due to a computationally expensive function that is only needed on some corner cases. Optimize the code to aboid the timeout:
-@[Skipping Code Execution]({"stubs": ["skip/skip.cpp","skip/vrandom.h","skip/vconvert.h","skip/v8i.h","skip/v8f.h"], "command": "./mycompile.sh skip ./skip"})
+The next exercise has some timeout problems due to a computationally expensive function that is only needed on some corner cases. Optimize the code to avoid the timeout:
+@[Skipping Code Execution]({"stubs": ["skip/skip.cpp","skip/v8f.h"], "command": "./mycompile.sh skip ./skip"})
 
 
 ## Controlling the Data Flow

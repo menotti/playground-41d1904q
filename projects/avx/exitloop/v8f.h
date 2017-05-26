@@ -129,7 +129,7 @@ STI v8f nan8f(int n = 0x10) {return _mm256_castsi256_ps(_mm256_set1_epi32(0x7FC0
 STI bool horizontal_or(v8f const &a){return ! _mm256_testz_ps(a.v,a.v);}
 //STI bool horizontal_and(v8f const &a){return _mm256_testc_ps(a.v,constant8f<-1>())!= 0);}
 
-STI int horizontal_add8(v8f const & a) {
+STI float horizontal_add(v8f const & a) {
     __m256 t1 = _mm256_hadd_ps(a.v,a.v);
     __m256 t2 = _mm256_hadd_ps(t1,t1);
     __m128 t3 = _mm256_extractf128_ps(t2,1);
