@@ -42,7 +42,7 @@ if (value > 3.0f || (value <=-3.7f && value > -15.0f)) {
    return sqrt(2.0f*value+1.5f);
  }
  else {
-   return -2.0f*value-8.7f);
+   return (-2.0f*value-8.7f);
  }
 ```
 @[Masked load]({"stubs": ["masked/masked.cpp","masked/v8f.h"], "command": "./mycompile.sh masked ./masked"})
