@@ -3,7 +3,7 @@
 ## History
 
 In last years CPUs have reached some physical and power limitations, so CPU speeds don't have a noticeable improvement in Ghz.
-As computation requirements continues increasing, CPU designers decided to solve this problem with two solutions:
+As computation requirements continues increasing, CPU designers decided to solve this problem with three solutions:
 
 -  Adding more cores. This way Operating Systems can distribute running application among different cores. Also programs can create multiple threads to maximize core usage.
 -  Adding vector operations to each core. This solution allows to execute the same instructions to a vector of data. This can only be done at application level.

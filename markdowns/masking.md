@@ -2,7 +2,7 @@
 
 ## Masks in Vectors
 
-In the last lesson we presented the mask concept. As it's a critical concept to control the data flow, it needs a better explanation.
+In the previous lesson we presented the mask concept. As it's a critical concept to control the data flow, it needs a better explanation.
 
 A mask is the result of a logical operation between vectors. It has many similarities with booleans (they are the result of logical operations on single numbers, or other booleans), but internally each mask component must have either all 0 bits or all 1 bits.
 
@@ -52,7 +52,7 @@ if (value > 3.0f || (value <=-3.7f && value > -15.0f)) {
 
 ## Performance 
 
-Conditional load using masks is a branchless conditional, it's not really a branch so it doesn't have branch mispredictions, and the CPU can make better use of out-of-order execution.
+Conditional load using masks aren't real branches so it doesn't have mispredictions, and the CPU can make better use of out-of-order execution.
 But this comes with a price. As it's branchless and all the conditional execution is done with masks operations, both branches are always calculated and executed.
 If you have a pretty complex calculation on value_false, it will be always calculated even if it happens only 0.00001% of the time.
 This can lead to performance problems if there are parts of the code rarely needed, but computationally very expensive.

@@ -33,6 +33,8 @@ For some reason SSE and AVX lack integer division operators. There are three way
 
 3. On known divisors at compile time, there are some magic numbers to convert division by constants into multiplications. Check [libdivide](https://libdivide.com/) and [Exact Division by Constants](http://www.icodeguru.com/Embedded/Hacker's-Delight/077.htm) for more info
 
+4. On power of two divisions, using the bit shift operation. Division of integer 2 is the same that a right shift. This can only be done if all the vector is divided by the same power of two number. Watch out with the right shift on signed numbers! Use sign aware bit shifts.
+
 ** Lack of trigonometric functions **
 
 There aren't trigonometric functions on vector intrinsic functions. Possible solutions are calculating them as linear code (one by one in each vector value), or creating approximation functions. Taylor Series and Remez approximations give good results.
@@ -41,13 +43,13 @@ There aren't trigonometric functions on vector intrinsic functions. Possible sol
 
 Additionally, there aren't random number generators for vectors as intrinsics, but it's simple to recreate a good pseudorandom generator from a linear version. Just be sure about the bits used on the pseudorandom number generator, 32 or 64bit RNG are preferred to fill vectors. 
 
-4. On power of two divisions, using the bit shift operation. Division of integer 2 is the same that a right shift. This can only be done if all the vector is divided by the same power of two number. Watch out with the right shift on signed numbers! Use sign aware bit shifts.
 
 ## Performance penalties
 
 **Data Alignment**
 
-Some older CPU architectures can't use vectorization unless data is memory aligned to the vector size. Some other CPU's can use unaligned data with some performance penalties, most recent doesn't have any penalty, so the perfomance may depend on the CPU.
+Older CPU architectures can't use vectorization unless data is memory aligned to the vector size. Some other CPU's can use unaligned data with some performance penalties. In recent processors the penalty seems to be negligible [Data alignment for speed: myth or reality?](http://lemire.me/blog/2012/05/31/data-alignment-for-speed-myth-or-reality/). 
+But just to be safe it could be a good idea to align data if that doesn't add excessive overhead.
 
 In GCC data alignment can be done with these variable attributes:
  `__attribute__((aligned(16)))`
@@ -71,6 +73,6 @@ Check [Avoiding AVX-SSE Transition Penalties](https://software.intel.com/en-us/a
 
 Moving data back and forth from AVX registers could be expensive. In some cases if you have some structured data on a non-linear way, sending this data to AVX vectors, calculate some functions and recovering this data is more expensive that simply calculating it on a linear way.
 
-Some time ago I tried to simulate some physics game [Codingame's Poker Chip Race](https://www.codingame.com/multiplayer/bot-programming/poker-chip-race) with AVX. This game is based on N entities colliding on a 2D space, with circular collisions. So in that scenario I neded to calculate up to N*(N-1)/2 possible collisions. My first attempt was having normal entities classes (with position, radius, etc), and for the collision calculation I'll shuffle all possible entities collisions on AVX vectors, calculate collisions on AVX and return back to entities. Once I finished, the results I obtained were mediocre, not more than 10% improvement from linear code, with a lot of overhead and hard to mantain code.  After using a profiler I detected that 90% of the CPU time was being used on data loading and unloading. 
+Some time ago I tried to simulate some physics game [Codingame's Poker Chip Race](https://www.codingame.com/multiplayer/bot-programming/poker-chip-race) with AVX. This game is based on N circular entities colliding on a 2D space. So in that scenario I neded to calculate up to N*(N-1)/2 possible collisions. My first attempt was having normal entity classes (with position, radius, etc), and for the collision calculation I'll shuffle all possible entities collisions on AVX vectors, calculate them on AVX and return back to entities. Once I finished, the results I obtained were mediocre, not more than 30% improvement from linear code, with a lot of overhead and hard to mantain code.  After using a profiler I detected that 90% of the CPU time was being used on data loading and unloading. 
 
 So programmers must take into account the data loading and unloading overhead, that in some cases it becomes the bottleneck.

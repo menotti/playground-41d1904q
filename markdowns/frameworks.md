@@ -19,7 +19,7 @@ There are existing frameworks that wraps vector datatypes inside new classes. Th
 Among others, you can use these two frameworks:
 
 1. [Agner Fog's C++ vector class library](http://www.agner.org/optimize/#vectorclass). Complete and updated regularly. Includes trigonometric functions.
-2. [Unified Multicore Environment](https://gain-performance.com/ume/). It's a more recent library, I haven't used it personally, the source code is at [https://github.com/edanor/umesimd](https://github.com/edanor/umesimd).
+2. [Unified Multicore Environment](https://gain-performance.com/ume/). It's a more recent library, I haven't used it personally.
 
 ## Reduced size Frameworks
 

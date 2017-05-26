@@ -15,8 +15,8 @@ AVX and SSE vectorization is interesting, and the theorical benefit surpasses an
 
 **Pros**
 
-- Potential gains of 500% to 700% performance versus a linear code.
-- Similarities with CUDA, the vectorization programming at GPU level.
+- Potential gains of 300% to 600% performance versus a linear code.
+- Similarities with CUDA, the vectorized programming at GPU level.
 
 **Cons**
 
@@ -28,7 +28,7 @@ AVX and SSE vectorization is interesting, and the theorical benefit surpasses an
 
 ### Further Courses
 
-*In the works: Link to MarsLander GA using AVX*
+*In the works: Offline MarsLander solver using Genetic Algorithm (AVX enabled)*
 
 ### Codingame Multiplayer Games
 
