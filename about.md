@@ -33,10 +33,4 @@ On high performance programs this is a noticeable performance boost.
 Common usage:
 -  Intensive CPU calculations, like multimedia, encoding, simulations.
 
-
-*Delete this*
-https://tech.io/playgrounds/240/webconsole/content/file-and-directory-management-in-unix-systems
- cat /proc/cpuinfo
- gcc -march=native -dM -E - < /dev/null | egrep "SSE|AVX" | sort
-
  
