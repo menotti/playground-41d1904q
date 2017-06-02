@@ -26,7 +26,7 @@ respectively.
 AVX adds three typedefs: `__m256` , `__m256d` and `__m256i`. Float, double (d) and integer (i) 
 respectively.
 
-![SSE & AVX Registers](avx.png)
+![SSE & AVX Registers](/images/avx.png)
 
 >**NOTE:** XMM and YMM overlap! XMM registers are treated as the lower half of the corresponding YMM register. This can introduce some performance issues when mixing SSE and AVX code.
 
@@ -44,7 +44,7 @@ Floating point datatypes (\_\_m128, \_\_m128d, \_\_m256 and \_\_m256d) have only
 
 When an AVX instruction is executed, the process is as follows:
 
-![AVX Add](avxplus.png)
+![AVX Add](/images/avxplus.png)
 
 All operations are applied at the same time. Performance-wise, the cost of executing a single `Add` on a float is similar to executing `VAdd` on 8 floats in AVX. In [Agner Fog's Instruction Tables](http://www.agner.org/optimize/instruction_tables.pdf), you have more information about instruction latencies and throughput.  On Sandy Bridge architecture, `VADDPS/D` has latency 3 and throughput 1, just like `FADD(P)`.
 

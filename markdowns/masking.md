@@ -8,7 +8,7 @@ A mask is the result of a logical operation between vectors. It has many similar
 
 Let's compare two AVX float vectors with the greater-than operator:
 
-![Mask AVX](mask.png)
+![Mask AVX](/images/mask.png)
 
 The inputs are two vectors with float components. The output of the logical operation is also a vector with float components, but its values have the bits set to either all 0's or all 1's.
 All 1's represents a `TRUE`, and all 0's is a `FALSE`. The all 1's value is printed as `-nan` for floats, or -1 for integers. The real value stored isn't important. We just need to know that it holds true and false values.
@@ -31,7 +31,7 @@ Masks can be used to conditionally load values into vectors.
 In you recall the blend-based functions. All of them used masks to conditionally control the load of values into vectors:
 **`if_select`**`(mask,value_true,value_false)` can be represented as:
 
-![if_select](ifselect.png)
+![if_select](/images/ifselect.png)
 
 When the mask is set to `FALSE`, data is loaded from `value_false` vector, and when `TRUE`, it comes from `value_true`.
 The concept is simple but effective.
