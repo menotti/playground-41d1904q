@@ -1,41 +1,41 @@
 # Final Words
 
-On this course you have a good grasp about manual and automatic CPU vectorization:
+In this course, you have obtained a good grasp of manual and automatic CPU vectorization:
 
-- Hardware and software requirements for using SSE and AVX instructions on your code.
+- Hardware and software requirements for using SSE and AVX instructions in your code.
 - Vector datatypes available.
-- Information about how to check the autovectorization usage, and hints about loops that can be autovectorized.
+- Information about how to check for autovectorization usage, and hints about loops that can be autovectorized.
 - C++ Vector Frameworks.
-- Masking and conditional load.
+- Masking and conditional loading.
 - Controlling the Data Flow.
 
 ### Pros and Cons
 
-AVX and SSE vectorization is interesting, and the theorical benefit surpasses any linear optimization:
+AVX and SSE vectorization are interesting, and the theoretical benefit surpasses any linear optimization:
 
 **Pros**
 
-- Potential gains of 300% to 600% performance versus a linear code.
-- Similarities with CUDA, the vectorized programming at GPU level.
+- Potential gains of 300% to 600% performance versus linear code.
+- Similarities with CUDA, vectorized programming at the GPU level.
 
 **Cons**
 
 - Performance depends on the running hardware.
 - Bad performance when there is massive data loading and unloading.
-- Data Flow can become very hard to control, and execution time of every data inside a vector affects all the vector execution time. You can't exit early until all data satisfy the exit condition.
+- Data Flow can become very hard to control, and execution time of every value inside a vector affects the whole vector execution time. You can't exit early until all values satisfy the exit condition.
 - Complex to code.
 - Lack of intrinsic functions: Trigonometry, random numbers, integer division.
 
 ### Further Courses
 
-*In the works: Offline MarsLander solver using Genetic Algorithm (AVX enabled)*
+*In the works: Offline MarsLander solver using a Genetic Algorithm (AVX enabled)*
 
 ### Codingame Multiplayer Games
 
 AVX-enabled simulations can be achieved on some Codingame Multiplayer Games:
 
 - [Coders Strike Back](https://www.codingame.com/multiplayer/bot-programming/coders-strike-back) My AVX version reached between 2.5 and 3.5 Million simulations/turn, with turns of 150 milliseconds. This is done by parallelizing 8 game state simulations at once. An older version with serialized calculations (that is, having data outside AVX, shuffling it inside AVX vectors, calculate, and unload the result) only achieved 600k sims/turn.
-- [Poker Chip Racer](https://www.codingame.com/multiplayer/bot-programming/poker-chip-race) Performance is very dependant on number of entities, between 100k and 1.5M sims/turn. Turns are 150ms too.
+- [Poker Chip Racer](https://www.codingame.com/multiplayer/bot-programming/poker-chip-race) Performance is very dependant on the number of entities, between 100k and 1.5M sims/turn. Turns are 150ms too.
 
 Many other games can be parallelized and simulated using AVX/SSE vectors.
 
