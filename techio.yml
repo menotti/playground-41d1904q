@@ -1,4 +1,5 @@
 title : "SSE & AVX Vectorization"
+cover: /images/cover.png
 plan:
   - title: "What is SSE and AVX?"
     statement: markdowns/intro.md
