@@ -32,6 +32,7 @@ respectively.
 
 Floating point datatypes (\_\_m128, \_\_m128d, \_\_m256 and \_\_m256d) have only one kind of data structure. Because of this, GCC allows for access to data components as an array.
  I.e: This is valid:
+ 
 ```cpp
   __m256 myvar = _mm256_set1_ps(6.665f); //Set all vector values to a single float
   myvar[0] = 2.22f;                       //This is valid in GCC compiler
