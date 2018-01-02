@@ -23,7 +23,7 @@ But it's harder to read because it is more complex.
 
 ## Missing functions in SSE/AVX intrinsics
 
-** Lack of integer division **
+**Lack of integer division**
 
 For some reason, SSE and AVX lack integer division operators. There are some ways to overcome this:
 
@@ -32,11 +32,11 @@ For some reason, SSE and AVX lack integer division operators. There are some way
 - For known divisors at compile time, there are some magic numbers to convert division by a constant into a multiplication operation. See [libdivide](https://libdivide.com/) and [Exact Division by Constants](http://www.icodeguru.com/Embedded/Hacker's-Delight/077.htm) for more info
 - For power of two divisions, using the bit shift operation. Division by integer 2 is the same as a right shift. This can only be done if all the vectors are divided by the same power of two number. Watch out when performing a right shift on signed numbers! Use sign aware bit shifts.
 
-** Lack of trigonometric functions **
+**Lack of trigonometric functions**
 
 There aren't trigonometric functions in vector intrinsic functions. Possible solutions are calculating them with linear code (one by one for each vector value), or creating approximation functions. Taylor Series and Remez approximations give good results.
 
-** Lack of a random number generator **
+**Lack of a random number generator**
 
 Additionally, there aren't random number generators for vectors as intrinsics. But it's simple to recreate a good pseudorandom generator from a linear version. Just be sure about the bits used in the pseudorandom number generator. 32 or 64bit RNG are preferred for filling vectors. 
 
