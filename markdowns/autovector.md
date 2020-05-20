@@ -1,55 +1,53 @@
-# Automatic Vectorization
+# Vetorização automática
 
-## GCC Autovectorization flags
+## _Flags_ de auto-vetorização do GCC
 
-GCC is an advanced compiler, and with the optimization flags `-O3` or `-ftree-vectorize` the compiler will search for loop vectorizations (remember to specify the `-mavx` flag too). The source code remains the same, but the compiled code by GCC is completely different.
+O GCC é um compilador com recursos muito avançados, e, com as _flags_ de otimização `-O3` ou `-ftree-vectorize`, o programador pode indicar ao compilador para que procure por laços e otimize-os (lembre-se de também especificar a _flag_ `-mavx`). O código fonte continua o mesmo, contudo, o código compilado pelo GCC é completamente diferente.
 
-GCC won't log anything about automatic vectorization unless some flags are enabled. If you need details of autovectorization results you can use the compiler flags:
+Por padrão, o GCC não irá indicar se ou onde foi aplicada a auto-vetorização, exceto que as seguintes _flags_ sejam utilizadas:
 
-- `-fopt-info-vec` or `-fopt-info-vec-optimized`: The compiler will log which loops (by line N°) are being vector optimized.
-- `-fopt-info-vec-missed`: Detailed info about loops not being vectorized, and a lot of other detailed information.
-- `-fopt-info-vec-note`: Detailed info about all loops and optimizations being done.
-- `-fopt-info-vec-all`: All previous options together.
+- `-fopt-info-vec` ou `-fopt-info-vec-optimized`: O compilador vai informar quais laços (por linha _n_) estão sendo otimizados por vetorização.
+- `-fopt-info-vec-missed`: Fornece informações detalhadas sobre os laços nos quais não foram otimizados, permitindo ao programador que realize mudanças no código para que tal otimização seja possível.
+- `-fopt-info-vec-note`: Informações detalhadas sobre todos os laços e otimizações feitas.
+- `-fopt-info-vec-all`: Todas as _flags_ anteriores.
 
->**NOTE:** There are similar `-fopt-info-[options]-optimized` flags for other compiler optimizations, like `inline`: `-fopt-info-inline-optimized`
+>**NOTA:** Há _flags_ de similares para outras otimizações que seguem o formato `-fopt-info-[opção]-optimized` tal como a otimização `inline` na qual pode ser indicada com a _flag_ `-fopt-info-inline-optimized`
 
-In this example we will use GCC Autovectorization, enabled with `-O3` and with verbose mode flag `-fopt-info-vec-optimized`. You can change the compiler flags to see the different logging options:
+Neste exemplo, será utilizaremos a otimização de auto-vetorização do GCC. Para isso, habilite as _flags_ `-O3` e com o modo verboso `-fopt-info-vec-optimized`. Você pode alterar as _flags_ de compilação para ver diferentes opções de saída:
 @[Autovectorization]({"stubs": ["autovector/autovector.cpp","autovector/compilerflags.txt"], "command": "./mycompileLOG.sh autovector ./autovector"})
 
-If everything is correct, you should see the compiler Test Results:
+Se tudo estiver correto, os resultados dos testes devem ser iguais aos seguintes:
 ```
 /project/target/autovector/autovector.cpp:22:21: note: loop vectorized
 /project/target/autovector/autovector.cpp:15:23: note: loop vectorized
 ```
-With the same code you can test two different things:
+Com o mesmo código fonte, é possível realizar dois testes distintos:
 
-- In the `compilerflags.txt` file, change the log options to `-fopt-info-vec-all` and rerun the Example.
-- On line 1 of `autovector.cpp`, change `optimize("O3",` to `optimize("O2",` and rerun.
-Non-vectorized compilations will be slower than vectorized ones.
+- No arquivo `compilerflags.txt`, altere as opções de exibição de informações para `-fopt-info-vec-all`, e execute novamente o exemplo.
+- Na primeira linha de do arquivo `autovector.cpp`, altere `optimize("O3",` para `optimize("O2",`, e execute novamente o exemplo.
 
-## Criteria for loop vectorization
+Compilações que não utilizam otimizações de vetorização serão mais lentas que as vetorizadas.
 
-Not all loops can be vectorized. In order for vectorization to be performed, there are some strict requirements for the loop.
+## Requisitos para a vetorização de laços
 
-- The loop count can't change once the loop starts. That means that the end of the loop can be a dynamic variable, increasing or decreasing its value at will, but once the loop starts, it must be constant.
-- There are limitations to using `break` or `continue` sentences. Sometimes the compiler is clever enough to make it work, but in some cases the loop won't be vectorized. Try to add the line  `if (j==27) continue;` right before the `result[j]` assignment on line 25, and rerun.
-- There are some limits on calling external functions inside a loop.
-- There shouldn't be data dependencies with other indexes of the loop. I.E. the loop: `for (int i=1; i<N; ++i) x[i]=x[i-1]*2;` is traversed with a variable `i`, and data `x[i]` depends on the previous `x[i-1]` value. Since AVX registers are loaded as 8 floats, the compiler can't do these calculations with a vector.
-- Conditionals sentences (if/else) can be used if they don't change the control flow, and are only used to conditionally load A or B values into a C variable. Selecting A or B is done with a mask in the compiler, so it calculates both branches A and B, and C will store either one value or another:
+Nem todos os laços podem ser vetorizados. Para que tal otimização seja realizada, existem algumas ressalvas:
+
+- A contagem do laço não pode ser alterada assim que as iterações se iniciarem. Isso significa que o final do laço deve ser previsível, sem a utilização de variáveis dinâmicas para esse controle, isto é, alterarem-se sem comportamento previsível, aleatoriamente crescendo ou descrescendo.
+- O uso das palavras chave `break` ou `continue` também impõem limitações. Algumas vezes o compilador é inteligente o suficiente para aplicar a otimização mesmo com o uso delas, mas este não é sempre o caso. Tente adicionar a linha `if (j == 27) continue;` logo antes da atribuição `result[j]` na linha 25, e execute novamente a compilação.
+- Há alguns limites na realização de chamadas de funções externas dentro do laço.
+- Não deve haver dependência de dados com outros índices do laço. Por exemplo, `for (int i = 1; i < N; i++) x[i] = x[i - 1] * 2;`, neste caso, o laço é percorrido com a variável `i`, e o dado na posição `x[i]` depende no valor resultante anterior `x[i - 1]`. De modo que os registradores AVX são carregados utilizando 8 pontos flutuantes, o compilador não consegue fazer tal operação de forma otimizada.
+- Comandos condicionais (`if` / `else`) podem ser utilizados desde que não alterem o fluxo de controle, e apenas para, por exemplo, condicionamente carregar os valores `A` ou `B` na variável `C`. Para selecionar os valores `A` ou `B` o compilador aplica o uso de máscaras, de modo que ambos os caminhos de dados `A` e `B` são calculados, e `C` vai carregar um valor ou outro. Por exemplo:
 ```cpp
- if ( s >= 0 ) {
-   x[i] = (-b[i]+s)/(2.0f*a[i]);
-   y[i] = (-b[i]-s)/(2.0f*a[i]);
- }
- else {
-   x[i] = 0.0f;
-   y[i] = 0.0f;
- }
+if ( s >= 0 ) {
+  x[i] = (-b[i] + s) / (2.0f * a[i]);
+  y[i] = (-b[i] - s) / (2.0f * a[i]);
+} else {
+  x[i] = 0.0f;
+  y[i] = 0.0f;
+}
 ```
-This is a vectorizable loop. The control flow never changes, and the `x[i]` and `y[i]` values are always set to either one or the other value.
+Este é um laço vetorizável. Note que o fluxo de controle nunca é alterado, e as posições `x[i]` e `y[i]` são sempre definidas para um ou outro valor.
 
-Read [Vectorization with Intel C++ Compilers](https://software.intel.com/sites/default/files/m/4/8/8/2/a/31848-CompilerAutovectorizationGuide.pdf) for additional info on autovectorization. This document is aimed at Intel Compilers, but it gives interesting and complete information about autovectorization.
-The GCC compiler has one webpage with some information on 
-[Auto-vectorization in GCC](https://gcc.gnu.org/projects/tree-ssa/vectorization.html) but it's pretty outdated.
+Leia [Vectorization with Intel C++ Compilers](https://software.intel.com/sites/default/files/m/4/8/8/2/a/31848-CompilerAutovectorizationGuide.pdf) (em inglês) para informações adicionais sobre auto-vetorização. Este documento foca em compiladores Intel, mas dá informações completas e interessantes sobre o assunto. Também é possível encontrar informações na página [Auto-vectorization in GCC](https://gcc.gnu.org/projects/tree-ssa/vectorization.html) (em inglês) do compilador GCC.
 
-The good thing about autovectorization is that it comes for free. The developer doesn't need to change anything, and maybe the loop will be vectorized. But sometimes (especially in high performance computing applications) loops and vectorization need to be fine tuned, ensuring maximum throughput by using manual AVX vectorization. We will see that in the next lessons.
+Um detalhe interessante sobre auto-vetorização é que ela vem de graça. O programador não precisa realizar mudanças drásticas no código, e possivelmente o laço será vetorizado. Algumas vezes, especialmente em computações de alto desempenho, os laços e a vetorização precisam ser otimizados manualmente para utilizar os registradores AVX, garantindo maior fator de saída. Tal tópico será explorado nos próximos tutoriais.
