@@ -1,4 +1,4 @@
-# Frameworks SSE & AVX C++
+# Frameworks C++ SSE & AVX 
 
 ## Complexidade de funções intrínsecas
 
@@ -13,12 +13,12 @@ x = (b + sqrt( b*b - a*c*4.0f))/(a*2.0f);
 ```
 É como trabalhar com pontos flutuantes (floats). Você apenas precisa se lembrar que essas variáveis são vetores. Como você pode notar, o empacotamento permite operações aritméticas de um vetor com um valor escalar (vetor * escalar = vetor).
 
-## Frameworks em C++ para computação SIMD
+## Frameworks C++ para computação SIMD
 
 Existem frameworks que agrupam tipos de dados vetoriais dentro de novas classes. Em seguida, sobrecarregam os operadores aritméticos, lógicos e de atribuição para simplificar os cálculos.
 Entre outros, você pode usar esses dois frameworks:
 
-1. [Biblioteca de classes vetoriais em C++ de Agner Fog's](http://www.agner.org/optimize/#vectorclass). Completo e atualizado regularmente. Inclui funções trigonométricas.
+1. [Biblioteca de classes vetoriais C++ de Agner Fog's](http://www.agner.org/optimize/#vectorclass). Completo e atualizado regularmente. Inclui funções trigonométricas.
 2. [Ambiente Multicore Unificado](https://gain-performance.com/ume/). É a biblioteca mais recente. Eu não usei pessoalmente.
 
 ## Frameworks de tamanho reduzido
@@ -38,14 +38,14 @@ Em todas os frameworks vetoriais, você encontrará algumas funções especiais.
 
 **Funções baseadas em mesclagem**: A mesclagem é o processo de carregar condicionalmente valores vetoriais com base em uma máscara. Isso será explicado melhor nas lições a seguir. Em ambos, no empacotamento de Agner Fog e no meu empacotamento, as funções derivadas são:
 
-1. **`if_select`**`(máscara,valor_verdadeiro,valor_falso)`: Carga condicional de um vetor baseado em uma máscara. Se a `máscara` for verdadeiro para um componente vetorial, `valor_verdadeiro` é retornado, ou `valor_falso` caso contrário. É um `if` "fake".
-2. **`if_add`**`(máscara,valor,adicionar_quando_verdade)`: Adição condicional. Retorna `valor + (máscara? adicionar_quando_verdade:0)`, para cada componente vetorial.
+1. **`if_select`**`(mask,value_true,value_false)`: Carga condicional de um vetor baseado em uma máscara. Se `mask` for verdadeiro para um componente vetorial, `value_true` é retornado, ou `value_false` caso contrário. É um `if` "fake".
+2. **`if_add`**`(mask,value,add_when_true)`: Adição condicional. Retorna `value + (mask? add_when_true:0)`, para cada componente vetorial.
 3. **`if_sub`, `if_mul`, `if_div`**: Semelhante a `if_add`, apenas com uma operação aritmética diferente.
 
 **Funções horizontais**: O horizontal significa que essas funções operam dentro de uma única variável vetorial, calculando algum valor lógico ou aritmético.
 
-1. **`horizontal_or`**`(máscara)`: Se qualquer componente vetorial na `máscara` for verdadeiro. Retorna um booleano.
+1. **`horizontal_or`**`(mask)`: Se qualquer componente vetorial em `mask` for verdadeiro. Retorna um booleano.
 
-2. **`horizontal_add`**`(vetor)`: Retorna a soma de todos os componentes do vetor. O valor retornado é um número (float ou double ou int, dependendo do tipo de vetor).
+2. **`horizontal_add`**`(vector)`: Retorna a soma de todos os componentes do vetor. O valor retornado é um número (float ou double ou int, dependendo do tipo de vetor).
 
 > **NOTE:** Agner Fog usa classes diferentes para máscaras (com sufixo `b`), enquanto eu uso as mesmas classes de vetores para simplificar e reduzir o código.
