@@ -1,51 +1,51 @@
-# SSE & AVX C++ Frameworks
+# Frameworks SSE & AVX C++
 
-## Intrinsics function complexity
+## Complexidade de funções intrínsecas
 
-Working directly with intrinsic functions can be complicated to code and to maintain. The problem is that intrinsic names are long, and arithmetic operations are written in function notation: `add(a,b)` instead of `a+b`.
-The following code is hard to read:
+Trabalhar diretamente com funções intrínsecas pode ser complicado de ser codificado e mantido. O problema é que os nomes intrínsecos são longos e as operações aritméticas são escritas na notação de função: `add(a,b)` ao invés de `a+b`.
+O código a seguir é dificil de ler:
 ```cpp
 x = _mm256_div_ps(_mm256_add_ps(b , _mm256_sqrt_ps(_mm256_sub_ps(_mm256_mul_ps(b , b) , _mm256_mul_ps(_mm256_mul_ps(a , c),_mm256_set1_ps(4.0f))))) , _mm256_mul_ps(a,_mm256_set1_ps(2.0f)));
 ```
-Pretty simple, right?. On the other hand this wrapped version is very readable:
+Muito simples, correto? Por outro lado, essa versão empacotada é muito legível:
 ```cpp
 x = (b + sqrt( b*b - a*c*4.0f))/(a*2.0f);
 ```
-It's like working with floats. You just need to remember that these variables are vectors. As you may notice, the wrapper allows arithmetic operations of a vector with a scalar (vector * scalar = vector).
+É como trabalhar com pontos flutuantes (floats). Você apenas precisa se lembrar que essas variáveis são vetores. Como você pode notar, o empacotamento permite operações aritméticas de um vetor com um valor escalar (vetor * escalar = vetor).
 
-## C++ Frameworks for SIMD computation
+## Frameworks em C++ para computação SIMD
 
-There are existing frameworks that wraps vector datatypes inside new classes. Then they overload arithmetic, logic and asignment operators to simplify calculations.
-Among others, you can use these two frameworks:
+Existem frameworks que agrupam tipos de dados vetoriais dentro de novas classes. Em seguida, sobrecarregam os operadores aritméticos, lógicos e de atribuição para simplificar os cálculos.
+Entre outros, você pode usar esses dois frameworks:
 
-1. [Agner Fog's C++ vector class library](http://www.agner.org/optimize/#vectorclass). Complete and updated regularly. Includes trigonometric functions.
-2. [Unified Multicore Environment](https://gain-performance.com/ume/). It's a more recent library. I haven't used it personally.
+1. [Biblioteca de classes vetoriais em C++ de Agner Fog's](http://www.agner.org/optimize/#vectorclass). Completo e atualizado regularmente. Inclui funções trigonométricas.
+2. [Ambiente Multicore Unificado](https://gain-performance.com/ume/). É a biblioteca mais recente. Eu não usei pessoalmente.
 
-## Reduced size Frameworks
+## Frameworks de tamanho reduzido
 
-Unfortunately these two frameworks are huge in size, at least for competitive programming where code is limited to a hundred KBs or less.
-In cases where you have limitations in code size, you'll need to strip down a shorter version of one of these frameworks.
+Infelizmente, essas dois frameworks são enormes, pelo menos para programação competitiva onde o código é limitado a cem KBs ou menos. 
+Nos casos em que você tem limitações no tamanho do código, você precisará reduzir para uma versão menor de um desses frameworks.
 
-I have some vector wrappers reduced in size, just focused on one or two types (for example, \_\_m256 8x float and \_\_m128i 8x short, to work with a vector size of 8, both on floats and on integers).
+Eu tenho alguns empacotadores de vetor com tamanho reduzido, focados apenas em um ou dois tipos (por exemplo, \_\_m256 8x float e \_\_m128i 8x short, para trabalhar com um tamanho de vetor de 8, tanto em floats (pontos flutuantes) quanto em números inteiros).
 
-@[Shortened Vector Wrappers]({"stubs": ["framework/framework.cpp","framework/vrandom.h","framework/vconvert.h","framework/v8i.h","framework/v8f.h"], "command": "./mycompile.sh framework ./framework"})
+@[Empacotar vetores menores]({"stubs": ["framework/framework.cpp","framework/vrandom.h","framework/vconvert.h","framework/v8i.h","framework/v8f.h"], "command": "./mycompile.sh framework ./framework"})
 
-Even being a reduced version, each vector datatype declaration takes up to 150 lines on average (plus some helper functions). Please use these wrappers as a reference for your own versions, as they may contains bugs.
+Mesmo sendo uma versão reduzida, cada declaração de tipo de dados vetorial ocupa até 150 linhas em média (mais algumas funções auxiliares). Por favor, use esses empacotadores como referência para as suas próprias versões, pois elas podem conter bugs.
 
-Wrapper classes can add overhead to the calls, thus reducing performance. But in my opinion, working with intrinsic functions directly is hardly maintainable, cumbersome and prone to errors. 
-From now on, I'll use wrapper classes to abstract the code from the underlying intrinsics.
+As classes empacotadas podem adicionar sobrecarga às chamadas, reduzindo o seu desempenho. Mas, na minha opinião, trabalhar diretamente com as funções intrínsecas dificilmente será mantido, além de ser embaraçoso e propenso a erros. A partir de agora, usarei classes empacotadas para abstrair o código dos intrínsecos fundamentais.
 
-In all vector Frameworks, you'll find some special functions. These special functions will be widely used in the following lessons. If you don't understand it at first glance, don't worry. You'll eventually understand the logic behind them.
+Em todas os frameworks vetoriais, você encontrará algumas funções especiais. Essas funções especiais serão amplamente usadas nas lições a seguir. Se você não entender à primeira vista, não se preocupe. Você eventualmente entenderá a lógica por trás deles.
 
-**Blend-based functions**: Blend is the process of conditionally loading vector values based on a mask. This will be explained better in the following lessons. In both Agner Fog's wrapper and in my wrapper, the derived functions are:
+**Funções baseadas em mesclagem**: A mesclagem é o processo de carregar condicionalmente valores vetoriais com base em uma máscara. Isso será explicado melhor nas lições a seguir. Em ambos, no empacotamento de Agner Fog e no meu empacotamento, as funções derivadas são:
 
-1. **`if_select`**`(mask,value_true,value_false)`: Conditional load of a vector based on a mask. If the `mask` is true for a vector component, `value_true` is returned, or `value_false` otherwise. It's a "fake" `if`.
-2. **`if_add`**`(mask,value,add_when_true)`: Conditional addition. Returns `value + (mask? add_when_true:0)`, for each vector component.
-3. **`if_sub`, `if_mul`, `if_div`**: Similar to `if_add`, just with a different arithmetic operation.
+1. **`if_select`**`(máscara,valor_verdadeiro,valor_falso)`: Carga condicional de um vetor baseado em uma máscara. Se a `máscara` for verdadeiro para um componente vetorial, `valor_verdadeiro` é retornado, ou `valor_falso` caso contrário. É um `if` "fake".
+2. **`if_add`**`(máscara,valor,adicionar_quando_verdade)`: Adição condicional. Retorna `valor + (máscara? adicionar_quando_verdade:0)`, para cada componente vetorial.
+3. **`if_sub`, `if_mul`, `if_div`**: Semelhante a `if_add`, apenas com uma operação aritmética diferente.
 
-**Horizontal functions**: Horizontal means that these functions operate within a single vector variable, by calculating some logical or arithmetic value.
+**Funções horizontais**: O horizontal significa que essas funções operam dentro de uma única variável vetorial, calculando algum valor lógico ou aritmético.
 
-1. **`horizontal_or`**`(mask)`: If any vector component in the `mask` is true. Returns a boolean.
-2. **`horizontal_add`**`(vector)`: Returns the sum of all components of the vector. The returned value is a number (either float, double or int, depending on the vector type).
+1. **`horizontal_or`**`(máscara)`: Se qualquer componente vetorial na `máscara` for verdadeiro. Retorna um booleano.
 
->**NOTE:** Agner Fog uses different classes for masks (with `b` suffix), while I use the same vector classes for the sake of simplicity and code reduction.
+2. **`horizontal_add`**`(vetor)`: Retorna a soma de todos os componentes do vetor. O valor retornado é um número (float ou double ou int, dependendo do tipo de vetor).
+
+> **NOTE:** Agner Fog usa classes diferentes para máscaras (com sufixo `b`), enquanto eu uso as mesmas classes de vetores para simplificar e reduzir o código.
