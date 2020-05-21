@@ -1,61 +1,56 @@
-# Masking and Conditional Load
+# Máscaras e Carregamento Condicional
 
-## Masks in Vectors
+## Máscaras em Vetores
 
-In the previous lesson we presented the mask concept. As it's a critical concept to control the data flow, it needs a better explanation.
+Na aula anterior, foi apresentado o conceito de máscara. Como é um conceito chave para controlar o fluxo de dados, é necessária uma explicação detalhada.
 
-A mask is the result of a logical operation between vectors. It has many similarities with booleans (they are the result of logical operations on single numbers, or other booleans), but internally each mask component must have either all 0 bits or all 1 bits.
+Uma máscara é um resultado de uma operação lógica entre vetores. Possui muitas similaridades com booleanos (eles são o resultado de operações lógicas em números únicos, ou em outros valores booleanos), mas internamente, cada máscara deve ser composta somente por _bits_ 1 ou por _bits_ 0.
 
-Let's compare two AVX float vectors with the greater-than operator:
+Vamos comparar dois vetores _float_ AVX com o operador maior que (>):
 
 ![Mask AVX](/images/mask.png)
 
-The inputs are two vectors with float components. The output of the logical operation is also a vector with float components, but its values have the bits set to either all 0's or all 1's.
-All 1's represents a `TRUE`, and all 0's is a `FALSE`. The all 1's value is printed as `-nan` for floats, or -1 for integers. The real value stored isn't important. We just need to know that it holds true and false values.
+As entradas são dois vetores com valores _float_. A saída dessa operação lógica também é um vetor de valores _float_, mas os valores devem ter somente bits 0's ou somente bits 1's. Todos os 1's representam o valor lógico `TRUE`, enquanto os 0's são o valor lógico `FALSE`. O valor 1's é impresso como `-nan` para _floats_, ou como -1 para inteiros. O valor real armazenado não é importante, somente é necessário saber que possui valores verdadeiros (`TRUE`) ou valores falsos (`FALSE`).
 
-**Result of logical operators (>,<,==,&&,||,etc)**
+**Resultado dos operadores lógicos (>, <, ==, &&, ||, etc)**
 
-Using the logical && operator as an example:
+Utilizando o operador && como um exemplo:
 
 - `vector && vector` = `mask`
 - `mask && mask` = `mask`
 - `vector && mask` = `?????` 
 
-I haven't tested the last case, I think it will give unexpected results. It's like trying to do `3 > false`, maybe in C++ this works, but in a logical sense it's incorrect.
+Eu ainda não testei o último caso, eu acho que retornará resultados inesperados. É como realizar `3 > false`, talvez em C++ funcione, mas no aspecto lógico, é incorreto.
 
->**NOTE:** Unlike booleans, not just any number other than zero is `TRUE`. Only a vector component with all bits set to 1 is considered `TRUE`. Don't use other values as masks. It will fail or it will give unexpected results.
+>**NOTA:** Diferentemente dos valores booleanos, em que qualquer valor diferente de zero é `TRUE`. Somente um vetor composto com todos os bits 1's é considerado `TRUE`. Não utilize outros valores como máscara, pois falhará ou retornará resultados inesperados.
 
-## Conditional Load
+## Carregamento Condicional
 
-Masks can be used to conditionally load values into vectors.
-In you recall the blend-based functions. All of them used masks to conditionally control the load of values into vectors:
-**`if_select`**`(mask,value_true,value_false)` can be represented as:
+Máscaras podem ser utilizadas para carregar condicionalmente valores em vetores. Se você relembrar as funções _blend-based_. Todas elas utilizam máscaras para controlar condicionalmente o carregamento de valores nos vetores:
+**`if_select`**`(mask,value_true,value_false)` pode ser representado como:
 
 ![if_select](/images/ifselect.png)
 
-When the mask is set to `FALSE`, data is loaded from `value_false` vector, and when `TRUE`, it comes from `value_true`.
-The concept is simple but effective.
+Quando a máscara é definida como `FALSE`, o dado é carregado do vetor `value_false`, e quando é `TRUE`, o dado vem do vetor `value_true`. O conceito é simples, mas efetivo.
 
-In the next exercise, you must load a vector according the following conditions:
+No próximo exercício, você precisa carregar um vetor de acordo com as seguintes condições:
 ```cpp
-if (value > 3.0f || (value <=-3.7f && value > -15.0f)) {
-   return sqrt(2.0f*value+1.5f);
+if (value > 3.0f || (value <= -3.7f && value > -15.0f)) {
+   return sqrt(2.0f * value + 1.5f);
  }
  else {
-   return (-2.0f*value-8.7f);
+   return (-2.0f * value - 8.7f);
  }
 ```
 @[Masked load]({"stubs": ["masked/masked.cpp","masked/v8f.h"], "command": "./mycompile.sh masked ./masked"})
 
 
->**NOTE:** **`if_select`** IS NOT an intrinsic function name. It's my wrapper for **`_mm256_blendv_ps`**. Please note that `_mm256_blendv_ps` has a very, very different parameter ordering! blendv has the mask as the last parameter!
+>**NOTA:** **`if_select`** NÃO É um nome de função intrínseca. É o meu wrapper para **`_mm256_blendv_ps`**. Por favor, note que `_mm256_blendv_ps` possui uma ordem de parâmetros bem diferente! _blendv_ tem a máscara como o úlitmo parâmetro!
 
-## Performance 
+## Desempenho
 
-Conditional loads using masks aren't real branches so they don't have mispredictions, and the CPU can make better use of out-of-order execution.
-But this comes with a price. Since they're branchless, and all the conditional execution is done with mask operations, both branches are always calculated and executed.
-If you have a pretty complex calculation for value_false, it will always be calculated, even if it happens only 0.00001% of the time.
-This can lead to performance problems if there are parts of the code that are rarely needed, but computationally very expensive.
+Carregamento condicional utilizando máscaras não são uma _branch_ real, então não possuem previsões errôneas, dessa forma a CPU pode fazer melhor uso da execução fora de ordem. Mas isso vem com um preço. Como vem sem uma _branch_, e toda a execução condicional é feita com operação em máscaras, ambas as _branches_ são sempre calculadas e executadas.
 
-In the next lesson, we will learn some ways to control the data flow, being able to exit loops early based on some conditions.
+Se você tiver um cálculo complexo para o `valu  e_false`, ele será sempre calculado, mesmo que ele aconteça em 0,00001% das vezes. Isso acarreta em problemas de desempenho se tiver partes do código que são realmente necessárias, mas computacionalmente caras.
 
+Na próxima lição, nós iremos aprender algumas formas de controlar o fluxo de dados, sendo capazes de sair de laçoes baseado em algumas condições.
