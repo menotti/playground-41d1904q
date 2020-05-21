@@ -10,7 +10,7 @@ Vamos comparar dois vetores _float_ AVX com o operador maior que (>):
 
 ![Mask AVX](/images/mask.png)
 
-As entradas são dois vetores com valores _float_. A saída dessa operação lógica também é um vetor de valores _float_, mas os valores devem ter somente bits 0's ou somente bits 1's. Todos os 1's representam o valor lógico `TRUE`, enquanto os 0's são o valor lógico `FALSE`. O valor 1's é impresso como `-nan` para _floats_, ou como -1 para inteiros. O valor real armazenado não é importante, somente é necessário saber que possui valores verdadeiros (`TRUE`) ou valores falsos (`FALSE`).
+As entradas são dois vetores com valores _float_. A saída dessa operação lógica, também é um vetor de valores _float_, mas os valores devem ter somente bits 0's ou somente bits 1's. Todos os 1's representam o valor lógico `TRUE`, enquanto os 0's são o valor lógico `FALSE`. O valor 1's é impresso como `-nan` para _floats_, ou como -1 para inteiros. O valor real armazenado não é importante, somente é necessário saber que possui valores verdadeiros (`TRUE`) ou valores falsos (`FALSE`).
 
 **Resultado dos operadores lógicos (>, <, ==, &&, ||, etc)**
 
@@ -51,6 +51,6 @@ if (value > 3.0f || (value <= -3.7f && value > -15.0f)) {
 
 Carregamento condicional utilizando máscaras não são uma _branch_ real, então não possuem previsões errôneas, dessa forma a CPU pode fazer melhor uso da execução fora de ordem. Mas isso vem com um preço. Como vem sem uma _branch_, e toda a execução condicional é feita com operação em máscaras, ambas as _branches_ são sempre calculadas e executadas.
 
-Se você tiver um cálculo complexo para o `valu  e_false`, ele será sempre calculado, mesmo que ele aconteça em 0,00001% das vezes. Isso acarreta em problemas de desempenho se tiver partes do código que são realmente necessárias, mas computacionalmente caras.
+Se você tiver um cálculo complexo para o `value_false`, ele será sempre calculado, mesmo que ele aconteça em 0,00001% das vezes. Isso acarreta em problemas de desempenho se tiver partes do código que são realmente necessárias, mas computacionalmente caras.
 
 Na próxima lição, nós iremos aprender algumas formas de controlar o fluxo de dados, sendo capazes de sair de laçoes baseado em algumas condições.
