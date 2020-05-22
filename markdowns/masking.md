@@ -2,11 +2,11 @@
 
 ## Máscaras em Vetores
 
-Na aula anterior, foi apresentado o conceito de máscara. Como é um conceito chave para controlar o fluxo de dados, é necessária uma explicação detalhada.
+Na lição anterior, foi apresentado o conceito de máscara. Como é um conceito chave para controlar o fluxo de dados, é necessária uma explicação detalhada.
 
-Uma máscara é um resultado de uma operação lógica entre vetores. Possui muitas similaridades com booleanos (eles são o resultado de operações lógicas em números únicos, ou em outros valores booleanos), mas internamente, cada máscara deve ser composta somente por _bits_ 1 ou por _bits_ 0.
+Uma máscara é um resultado de uma operação lógica entre vetores. Possui muitas similaridades com booleanos (eles são o resultado de operações lógicas em números únicos, ou em outros valores booleanos), mas, internamente, cada máscara deve ser composta somente por bits 1 ou por bits 0.
 
-Vamos comparar dois vetores _float_ AVX com o operador maior que (>):
+Vamos comparar dois vetores _float_ AVX com o operador maior que:
 
 ![Mask AVX](/images/mask.png)
 
