@@ -1,6 +1,6 @@
 # Pré-Requisitos
 
-SSE/AVX possui pré-requisitos na arquitetura da máquina alvo. Nesse curso, as compilações binárias terá como alvo apenas a máquina atual. Para isso, nós usaremos `arch=native`, uma flag do GCC para detectar os recursos da CPU e usá-los de acordo.
+SSE/AVX possuem pré-requisitos na arquitetura da máquina alvo. Nesse curso, as compilações binárias terão como alvo apenas a máquina atual. Para isso, nós usaremos `arch=native`, uma flag do GCC para detectar os recursos da CPU e usá-los de acordo.
 
 >**Nota:** Binários compilados irão falhar em maquinas que não possuem compatibilidade para AVX. Se você precisa de um binário que se adapte a diferentes CPUs, você precisará fazer uso da identificação da CPU e utilizar funções diferentes, ou fazer diferentes binários destinados para cada conjunto de instruções diferente.
 
