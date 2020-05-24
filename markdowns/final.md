@@ -1,47 +1,48 @@
-# Final Words
+# Palavras finais
 
-In this course, you have obtained a good grasp of manual and automatic CPU vectorization:
+Neste curso, você deve ter obtido um bom nível de compreensão sobre vetorização manual e automática de CPU:
 
-- Hardware and software requirements for using SSE and AVX instructions in your code.
-- Vector datatypes available.
-- Information about how to check for autovectorization usage, and hints about loops that can be autovectorized.
-- C++ Vector Frameworks.
-- Masking and conditional loading.
-- Controlling the Data Flow.
+- Requisitos de Hardware e software para usar instruções SSE e AVX no seu código.
+- Os tipos de dados de vetores disponíveis.
+- Informação sobre como checar o uso de autovetorização e dicas se loopes podem ser autovetorizados.
+- Frameworks de vetores em C++.
+- Mascaramento e carga condicional.
+- Controle do fluxo de dados.
 
-### Pros and Cons
+### Prós e contras
 
-AVX and SSE vectorization are interesting, and the theoretical benefit surpasses any linear optimization:
+As vetorizações AVX e SSE são interessantes e, teoricamente, seu uso traz mais benefícios que qualquer otimização linear.
 
-**Pros**
+**Prós**
 
-- Potential gains of 300% to 600% performance versus linear code.
-- Similarities with CUDA, vectorized programming at the GPU level.
+- Ganhos potenciais de 300% a 600% de performance quando comparados a código linear.
+- Similaridades com CUDA, programação vetorizada no nível de GPU.
 
-**Cons**
+**Contras**
 
-- Performance depends on the running hardware.
-- Bad performance when there is massive data loading and unloading.
-- Data Flow can become very hard to control, and execution time of every value inside a vector affects the whole vector execution time. You can't exit early until all values satisfy the exit condition.
-- Complex to code.
-- Lack of intrinsic functions: Trigonometry, random numbers, integer division.
+- A performance depende do hardware em que o código está sendo rodado.
+- Má performance quando há muito carregamento e descarregamento de dados.
+- O fluxo de dados pode se tornar bem difícil de controlar, e o tempo de execução de cada valor dentro do vetor afeta o tempo de execução geral. Você não pode sair antes que todos os valores satisfaçam a condição de saída.
+- É complexo para programar.
+- Carece de funções instrínsecas: Trigonometria, números aleatórios, divisão de inteiros.
 
-### Further Courses
+### Outros cursos
 
-*In the works: Offline MarsLander solver using a Genetic Algorithm (AVX enabled)*
+*Em desenvolvimento: Offline MarsLander solver using a Genetic Algorithm (AVX enabled)/*
 
-### Codingame Multiplayer Games
+### Jogos Multiplayer Codingame
 
-AVX-enabled simulations can be achieved on some Codingame Multiplayer Games:
+ Simulações com uso de AVX podem ser feitas em alguns Jogos Multiplayer Codingame:
 
-- [Coders Strike Back](https://www.codingame.com/multiplayer/bot-programming/coders-strike-back) My AVX version reached between 2.5 and 3.5 Million simulations/turn, with turns of 150 milliseconds. This is done by parallelizing 8 game state simulations at once. An older version with serialized calculations (that is, having data outside AVX, shuffling it inside AVX vectors, calculate, and unload the result) only achieved 600k sims/turn.
-- [Poker Chip Racer](https://www.codingame.com/multiplayer/bot-programming/poker-chip-race) Performance is very dependant on the number of entities, between 100k and 1.5M sims/turn. Turns are 150ms too.
+- [Coders Strike Back](https://www.codingame.com/multiplayer/bot-programming/coders-strike-back) Minha versão do AVX alcançou entre 2.5 e 3.5 milhões de simulações por turno, com turnos de 150 milisegundos. Isso é feito paralelizando 8 simulações de estadoos jo jogo ao mesmo tempo. Uma versão anterior com cálculos seriais (isto é, com dados fora do AVX, colocando-os dentro de vetores AVX, calculando e, depois, retirando o resultado) alcançou apenas 600k simulações/turno.
+- [Poker Chip Racer](https://www.codingame.com/multiplayer/bot-programming/poker-chip-race) Performance é bem dependente do número de indivíduos, entre 100k e 1.5M simulações/turno. Os turnos duram 150ms também.
 
-Many other games can be parallelized and simulated using AVX/SSE vectors.
+Vários outros jogos podem ser paralelizados e simulados usando vetores AVX/SSE.
 
-### Useful links
+### Links úteis
 
-- [Intel Intrinsics Guide](https://software.intel.com/sites/landingpage/IntrinsicsGuide)
-- [x86 Intrinsics Cheat Sheet](https://db.in.tum.de/~finis/x86-intrin-cheatsheet-v2.2.pdf?lang=en)
-- [Intel Architectures Developer's Manual](http://www.intel.com/content/dam/www/public/us/en/documents/manuals/64-ia-32-architectures-software-developer-vol-1-manual.pdf)
-- [Agner Fog's Software optimization resources](http://www.agner.org/optimize/)
+- [Guia de funções Intrínsecas da Intel](https://software.intel.com/sites/landingpage/IntrinsicsGuide)
+- [Tabela de x86 Intrinsics Cheat](https://db.in.tum.de/~finis/x86-intrin-cheatsheet-v2.2.pdf?lang=en)
+- [Manual dos Desenvolvedores de Arquiteturas da Intel](http://www.intel.com/content/dam/www/public/us/en/documents/manuals/64-ia-32-architectures-software-developer-vol-1-manual.pdf)
+- [Software de otimização de recursos de Agner Fog](http://www.agner.org/optimize/)
+
