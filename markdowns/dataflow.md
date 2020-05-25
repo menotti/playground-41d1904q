@@ -24,4 +24,5 @@ O próximo exercício apresenta alguns problemas de tempo limite devido a uma fu
 Utilizando `horizontal_or`, você pode interromper o loop antes. Não é possível conseguir essa otimização com autovetorização, mas com a vetorização manual é possível e preferível. 
 
 Neste exercício, será calculado uma pontuação máxima entre 8 simulações paralelas ao mesmo tempo, com um limite de 200 rodadas. Deseja-se finalizar a simulação quando atingir uma pontuação maior que 1700 pontos em qualquer uma das simulações, e retornar o valor máximo (um ponto flutuante, não todo o vetor de pontuação, somente o máximo) e a rodada que se atingiu este valor.
+
 @[Early exiting a loop]({"stubs": ["exitloop/exitloop.cpp","exitloop/v8f.h"], "command": "./mycompile.sh exitloop ./exitloop"})
