@@ -45,7 +45,7 @@ if (value > 3.0f || (value <= -3.7f && value > -15.0f)) {
 @[Masked load]({"stubs": ["masked/masked.cpp","masked/v8f.h"], "command": "./mycompile.sh masked ./masked"})
 
 
->**NOTA:** **`if_select`** NÃO É um nome de função intrínseca. É o meu wrapper para **`_mm256_blendv_ps`**. Por favor, note que `_mm256_blendv_ps` possui uma ordem de parâmetros bem diferente! _blendv_ tem a máscara como o úlitmo parâmetro!
+>**NOTA:** **`if_select`** NÃO É um nome de função intrínseca. É o meu wrapper para **`_mm256_blendv_ps`**. Por favor, note que `_mm256_blendv_ps` possui uma ordem de parâmetros bem diferente! _blendv_ tem a máscara como o último parâmetro!
 
 ## Desempenho
 
