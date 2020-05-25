@@ -8,7 +8,7 @@ Como dito na introdução, o SO, o compilador e a CPU devem todos suportar exten
 
 @[Detect System Capabilities]({"stubs": ["prereq/detect.sh"], "command": "./run.sh ./prereq/detect.sh"})
 
-Em `CPU flag capabilities`, nós procuraremos pela flag `avx`. Isso identifica que a CPU é compatível com AVX. Se você tem `avx2` significa que a CPU suporta extensões AVX2. AVX é o suficiente para se ter vetores float de 8x32 bits. AVX2 adiciona vetores para inteiros de 256 bits (números inteiros de 8x32 bits, por exemplo). Mesmo assim, vetores inteiros de 256 bits parecem ser executados da mesma forma que dois vetores de 128 bits, então a performance não melhora significativamente em relação aos vetores inteiros SSE de 128 bits.
+Em `CPU flag capabilities`, nós procuraremos pela flag `avx`. Isso identifica que a CPU é compatível com AVX. Se você tem `avx2` significa que a CPU suporta extensões AVX2. AVX é o suficiente para se ter vetores float de 8x32 bits. AVX2 adiciona vetores para inteiros de 256 bits (números inteiros de 8x32 bits, por exemplo). Mesmo assim, vetores inteiros de 256 bits parecem ser executados da mesma forma que dois vetores de 128 bits, então o desempenho não melhora significativamente em relação aos vetores inteiros SSE de 128 bits.
 
 Em `GCC capabilities` nós procuraremos pelo pragma **`#define __AVX__ 1`**. Isso indica que as branch do AVX serão ativadas.
 >**Sempre use -march=native ou -mavx !!** Se você roda o GCC sem elas, você **não conseguirá** a flag \_\_AVX\_\_!!! Os parâmetros padrões do GCC são genéricos e sem a flag não será possivel ativar o AVX mesmo que a CPU seja compatível.
