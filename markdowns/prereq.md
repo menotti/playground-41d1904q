@@ -1,19 +1,18 @@
-# Prerequisites
+# Pré-Requisitos
 
-SSE/AVX has prerequisites on the architecture of the target machine. In this Course, the binary builds will only target the current machine. That is, we'll use the `arch=native` GCC flag to detect CPU capabilities and use them accordingly.
+SSE/AVX possuem pré-requisitos na arquitetura da máquina alvo. Nesse curso, as compilações binárias terão como alvo apenas a máquina atual. Para isso, nós usaremos `arch=native`, uma flag do GCC para detectar os recursos da CPU e usá-los de acordo.
 
->**Note:** Compiled binaries will fail on machines without AVX capabilities. If you need a binary that adapts to different CPUs, you'll need to either make use of CPU identification and call different functions, or make different binaries targeted at different instruction sets.
+>**Nota:** Binários compilados irão falhar em maquinas que não possuem compatibilidade para AVX. Se você precisa de um binário que se adapte a diferentes CPUs, você precisará fazer uso da identificação da CPU e utilizar funções diferentes, ou fazer diferentes binários destinados para cada conjunto de instruções diferente.
 
-As stated on the introduction, the OS, the compiler, and the CPU must all allow AVX extensions.
-We can run this script to detect system capabilities:
+Como dito na introdução, o SO, o compilador e a CPU devem todos suportar extensões AVX. Nós podemos rodar esse script para detectar os recursos do sistema:
 
 @[Detect System Capabilities]({"stubs": ["prereq/detect.sh"], "command": "./run.sh ./prereq/detect.sh"})
 
-In the `CPU flag capabilities`, we'll search for the `avx` flag. This identifies the CPU as AVX compatible. If you have `avx2` that means the CPU allows AVX2 extensions. AVX is enough to have 8x32bit float vectors. AVX2 adds 256bits vectors for integers (8x32bit integers for example). Nevertheless, 256bit integer vectors seem to be executed the same as two 128bit vectors, so performance is not greatly improved from SSE 128bit integer vectors.
+Em `CPU flag capabilities`, nós procuraremos pela flag `avx`. Isso identifica que a CPU é compatível com AVX. Se você tem `avx2` significa que a CPU suporta extensões AVX2. AVX é o suficiente para se ter vetores float de 8x32 bits. AVX2 adiciona vetores para inteiros de 256 bits (números inteiros de 8x32 bits, por exemplo). Mesmo assim, vetores inteiros de 256 bits parecem ser executados da mesma forma que dois vetores de 128 bits, então a performance não melhora significativamente em relação aos vetores inteiros SSE de 128 bits.
 
-In the `GCC capabilities` we'll search for the **`#define __AVX__ 1`** pragma. This indicates that the AVX branches will be enabled.
->**Alway use -march=native or -mavx !!** If you run GCC without the correct march you **won't** get the \_\_AVX\_\_ flag!!! Default GCC parameters are generic, and without the flag it won't enable AVX even if the CPU is AVX capable.
+Em `GCC capabilities` nós procuraremos pelo pragma **`#define __AVX__ 1`**. Isso indica que as branch do AVX serão ativadas.
+>**Sempre use -march=native ou -mavx !!** Se você roda o GCC sem elas, você **não conseguirá** a flag \_\_AVX\_\_!!! Os parâmetros padrões do GCC são genéricos e sem a flag não será possivel ativar o AVX mesmo que a CPU seja compatível.
 
-Finally, we recheck that Linux Kernel is `2.6.30` or greater. A kernel `4.4.0` or greater is ideal.
+Por fim, nós verificamos se o Kernel do Linux é `2.6.30` ou maior. Um Kernel `4.4.0` ou maior é o ideal.
 
-With all these prerequisites, we are ready to code our first AVX vectorized program!
+Com todos esses pré-requisitos atendidos, nós estamos prontos para programar o nosso primeiro programa vetorizado AVX!
