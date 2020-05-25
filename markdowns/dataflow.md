@@ -16,6 +16,7 @@ Quando todos os valores na máscara são os mesmos, temos um simples booleano, v
 Nas minhas classes empacotadas, uso a função `horizontal_or (mask)` (que empacota intrínsecos `_xxx_testz_xx`). "Horizontal_OR" verifica se algum valor na máscara é `true`, e neste caso retorna um simples valor booleano, e `false` em caso contrário
 
 O próximo exercício apresenta alguns problemas de tempo limite devido a uma função computacionalmente intensiva, necessária apenas em alguns casos específicos. Otimize o código para evitar o tempo limite: 
+
 @[Skipping Code Execution]({"stubs": ["skip/skip.cpp","skip/v8f.h"], "command": "./mycompile.sh skip ./skip"})
 
 
