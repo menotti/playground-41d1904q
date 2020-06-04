@@ -1,7 +1,9 @@
-# About Tech.io Course - SSE & AVX Vectorization
+# Vetorização SSE & AVX - Tech.io playground 
 
-This is the source code used for the creation of a Course in the Tech.io platform.
+Este é o código fonte usado para a criação de um curso na plataforma Tech.io:
 
-https://tech.io/playgrounds/308ee7a663c367d41441dd2d42b2ebbf382/sse-avx-vectorization
+https://tech.io/playgrounds/53858/vetorizacao-sse-avx/
 
-See [about.md](about.md) for more information. 
+Traduzido do original em inglês disponível em:
+
+https://tech.io/playgrounds/283/sse-avx-vectorization/
