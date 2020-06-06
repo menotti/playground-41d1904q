@@ -1,4 +1,4 @@
-# O que são SSE e AVX?
+# O que são SSE e AVX?<sup id="a1">[1](#f1)</sup>
 
 ## História
 
@@ -49,3 +49,4 @@ Quando uma instrução em AVX é executada, o processo é o seguinte:
 
 Todas as operações são aplicadas no mesmo instante. Em termos de desempenho, o custo de execução para um único `Add` em um float é similar ao de executar `VAdd` em 8 floats em AVX. Em [Agner Fog's Instruction Tables](http://www.agner.org/optimize/instruction_tables.pdf), você tem maiores informações no que concerne à latência e taxa de transferência das instruções. Na arquitetura Sandy Bridge, `VADDPS/D` tem latência 3 and taxa de transferência 1, exatamente como `FADD(P)`
 
+<b id="f1">1</b> Este tutorial faz parte de um [Curso de Programação Paralela](https://github.com/menotti/pp) e traz apenas exemplos de uso. Acesse o material completo para mais detalhes. [↩](#a1)
